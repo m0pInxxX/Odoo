@@ -1,0 +1,19 @@
+<odoo>
+    <record id="paperformat_landscape" model="report.paperformat">
+        <field name="name">Landscape Paperformat</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+    </record>
+    <record id="action_report_sale_quotation" model="ir.actions.report">
+        <field name="name">Quotation Listing</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_quotation_report.report_sale_quotation</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="report_file">custom_quotation_report.report_sale_quotation</field>
+        <field name="print_report_name">'Quotation_%s' % (object.name)</field>
+        <field name="paperformat_id" ref="paperformat_landscape"/>
+    </record>
+</odoo>

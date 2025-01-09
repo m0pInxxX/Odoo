@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="bukti_kas_kecil_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-size: 12px; page-break-after: always;">
+                    <!-- Title -->
+                    <div style="text-align: center; font-size: 16px; color: #FF0000; font-weight: bold; margin-bottom: 20px;">
+                        BUKTI KAS KECIL KELUAR
+                    </div>
+
+                    <!-- Header Info -->
+                    <div style="margin-bottom: 20px;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <strong>PAY TO</strong>
+                                    <span t-field="o.partner_id.name"/>
+                                </td>
+                                <td style="width: 50%; text-align: right;">
+                                    <div><span style="color: #FF0000;">Voucher No.: </span><span t-field="o.name"/></div>
+                                    <div><span style="color: #FF0000;">Date: </span><span t-field="o.date" t-options='{"format": "dd/MM/yyyy"}'/></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Payment Amount in Words -->
+                    <div style="margin-bottom: 20px;">
+                        <strong>PAY THE SUM OF</strong><br/>
+                        <span t-field="o.amount_total" t-options='{"widget": "monetary_words"}'/>
+                    </div>
+
+                    <!-- Payment Details -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <th style="border: 1px solid black;">Payment Method</th>
+                            <th style="border: 1px solid black;">Cheque No.</th>
+                            <th style="border: 1px solid black;">Payment Amount</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;"><span t-field="o.payment_id.payment_method_line_id.name"/></td>
+                            <td style="border: 1px solid black;"></td>
+                            <td style="border: 1px solid black; text-align: right;">
+                                <span t-field="o.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Account Details -->
+                    <table style="width: 100%; margin-bottom: 30px;">
+                        <tr>
+                            <th>Acc. No.</th>
+                            <th>Description</th>
+                            <th style="text-align: right;">Amount</th>
+                        </tr>
+                        <t t-foreach="o.line_ids.filtered(lambda l: l.debit > 0)" t-as="line">
+                            <tr>
+                                <td><span t-field="line.account_id.code"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td style="text-align: right;"><span t-field="line.debit"/></td>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <!-- Signature Section -->
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 25%; text-align: center;">
+                                <p>PEMBUKUAN</p>
+                                <div style="margin-top: 50px;">_____________</div>
+                            </td>
+                            <td style="width: 25%; text-align: center;">
+                                <p>MENGETAHUI</p>
+                                <div style="margin-top: 50px;">_____________</div>
+                            </td>
+                            <td style="width: 25%; text-align: center;">
+                                <p>KASIR</p>
+                                <div style="margin-top: 50px;">_____________</div>
+                            </td>
+                            <td style="width: 25%; text-align: center;">
+                                <p>PENERIMA</p>
+                                <div style="margin-top: 50px;">_____________</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Footer -->
+                    <div style="margin-top: 20px; font-size: 10px; color: #FF0000;">
+                        This payment voucher was prepared by AutoCount Accounting
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo> 

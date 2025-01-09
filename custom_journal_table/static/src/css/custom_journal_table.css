@@ -1,0 +1,11 @@
+.o_list_view th[data-name="date"],
+.o_list_view td[data-name="date"] {
+    width: 200px !important; 
+    min-width: 200px;
+}
+
+.o_list_view th[data-name="amount_total_signed"],
+.o_list_view td[data-name="amount_total_signed"] {
+    width: 200px !important; 
+    min-width: 200px;
+}
