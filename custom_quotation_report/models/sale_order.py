@@ -4,6 +4,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'  # Extend model sale.order
 
     def get_quotation_details(self):
+        """Method to fetch quotation details for the report."""
         result = []
         for line in self.order_line:
             result.append({

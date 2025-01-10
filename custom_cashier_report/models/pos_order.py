@@ -1,8 +1,8 @@
-from odoo import models, fields, api
-import xlsxwriter
-from io import BytesIO
-import base64
+from odoo import models
 from datetime import datetime
+import xlsxwriter
+import base64
+from io import BytesIO
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
@@ -83,7 +83,7 @@ class PosOrder(models.Model):
 
         workbook.close()
         
-        # Create attachment for download
+        # Create attachment
         filename = f'POS_Orders_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
         attachment = self.env['ir.attachment'].create({
             'name': filename,
