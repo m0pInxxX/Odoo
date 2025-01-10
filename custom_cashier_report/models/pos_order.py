@@ -1,101 +1,79 @@
-from odoo import models
-from datetime import datetime
-import xlsxwriter
-import base64
+from odoo import models, fields, api
 from io import BytesIO
+import base64
+import xlsxwriter
+from datetime import datetime
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
 
-    def get_pos_details(self):
-        """Method to fetch POS details for the report."""
-        result = []
-        for line in self.lines:
-            result.append({
-                'product_code': line.product_id.default_code,
-                'product_name': line.product_id.name,
-                'quantity': line.qty,
-                'price_unit': line.price_unit,
-                'subtotal': line.price_subtotal,
-                'uom': line.product_uom_id.name,
-            })
-        return result
-
-    def action_export_xlsx(self):
+    def export_to_excel(self):
+        """Export POS orders to Excel file"""
         output = BytesIO()
         workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet('POS Orders')
-
+        
         # Formats
-        header_format = workbook.add_format({
-            'bold': True,
-            'align': 'center',
-            'border': 1,
-            'font_size': 11
-        })
+        header = workbook.add_format({'bold': True, 'align': 'center', 'border': 1, 'bg_color': '#D3D3D3'})
+        text = workbook.add_format({'align': 'left', 'border': 1})
+        number = workbook.add_format({'align': 'right', 'border': 1, 'num_format': '#,##0.00'})
         
-        data_format = workbook.add_format({
-            'align': 'left',
-            'border': 1,
-            'font_size': 10
-        })
-        
-        number_format = workbook.add_format({
-            'align': 'right',
-            'border': 1,
-            'font_size': 10,
-            'num_format': '#,##0.00'
-        })
-
         # Headers
-        headers = ['Doc No', 'Date', 'Code', 'Description', 'Cashier Name', 
-                  'UOM', 'Qty', 'Discount', 'Remaining', 'Unit Price', 
-                  'Tax', 'Exch. Rate', 'Amount']
-        for col, header in enumerate(headers):
-            worksheet.write(0, col, header, header_format)
-
+        headers = ['No', 'Date', 'Order', 'Customer', 'Product', 'Quantity', 'Price', 'Discount', 'Tax', 'Total']
+        for col, header_text in enumerate(headers):
+            worksheet.write(0, col, header_text, header)
+        
+        # Data
         row = 1
         for order in self:
             for line in order.lines:
-                worksheet.write(row, 0, order.name, data_format)  # Doc No
-                worksheet.write(row, 1, order.date_order.strftime('%d/%m/%Y'), data_format)  # Date
-                worksheet.write(row, 2, line.product_id.default_code or '', data_format)  # Code
-                worksheet.write(row, 3, line.product_id.name, data_format)  # Description
-                worksheet.write(row, 4, order.user_id.name, data_format)  # Cashier Name
-                worksheet.write(row, 5, line.product_uom_id.name, data_format)  # UOM
-                worksheet.write(row, 6, line.qty, number_format)  # Qty
-                worksheet.write(row, 7, line.discount, number_format)  # Discount
-                worksheet.write(row, 8, 0, number_format)  # Remaining
-                worksheet.write(row, 9, line.price_unit, number_format)  # Unit Price
-                worksheet.write(row, 10, line.tax_ids_after_fiscal_position.amount or 0, number_format)  # Tax
-                worksheet.write(row, 11, 1, number_format)  # Exch. Rate
-                worksheet.write(row, 12, line.price_subtotal, number_format)  # Amount
+                worksheet.write(row, 0, row, text)
+                worksheet.write(row, 1, order.date_order.strftime('%Y-%m-%d %H:%M:%S'), text)
+                worksheet.write(row, 2, order.name, text)
+                worksheet.write(row, 3, order.partner_id.name or 'Anonymous', text)
+                worksheet.write(row, 4, line.product_id.name, text)
+                worksheet.write(row, 5, line.qty, number)
+                worksheet.write(row, 6, line.price_unit, number)
+                worksheet.write(row, 7, line.discount, number)
+                worksheet.write(row, 8, sum(tax.amount for tax in line.tax_ids), number)
+                worksheet.write(row, 9, line.price_subtotal_incl, number)
                 row += 1
-
-            # Add subtotal per order
-            worksheet.write(row, 0, f"Subtotal for {order.user_id.name}", header_format)
-            worksheet.write(row, 12, order.amount_total, number_format)
-            row += 1
-
-        # Add grand total
-        worksheet.write(row, 0, "Grand Total", header_format)
-        worksheet.write(row, 12, sum(order.amount_total for order in self), number_format)
-
+        
+        # Column widths
+        widths = [5, 20, 15, 20, 30, 10, 12, 10, 10, 12]
+        for i, width in enumerate(widths):
+            worksheet.set_column(i, i, width)
+        
         workbook.close()
         
         # Create attachment
         filename = f'POS_Orders_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
         attachment = self.env['ir.attachment'].create({
             'name': filename,
+            'type': 'binary',
             'datas': base64.b64encode(output.getvalue()),
-            'type': 'binary'
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
-
+        
         return {
             'type': 'ir.actions.act_url',
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'self',
         }
 
-    def action_export_pdf(self):
+    def print_pos_order(self):
+        """Print POS order PDF report"""
         return self.env.ref('custom_cashier_report.action_report_pos_order_listing').report_action(self) 
+
+    def _compute_filtered_total(self):
+        for order in self:
+            if order.state == 'cancel':
+                order.filtered_total = 0.0
+            else:
+                order.filtered_total = order.amount_total
+
+    filtered_total = fields.Monetary(
+        string='Filtered Total',
+        compute='_compute_filtered_total',
+        currency_field='currency_id',
+    ) 

@@ -38,7 +38,25 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <t t-set="current_cashier" t-value="False"/>
+                        <t t-set="cashier_total" t-value="0"/>
                         <t t-foreach="docs" t-as="order">
+                            <t t-if="current_cashier != order.user_id">
+                                <!-- Print subtotal for previous cashier -->
+                                <t t-if="current_cashier">
+                                    <tr style="background-color: #F0F0F0;">
+                                        <td colspan="12" style="text-align: left; font-weight: bold;">
+                                            Subtotal for <t t-esc="current_cashier.name"/>
+                                        </td>
+                                        <td style="text-align: right; font-weight: bold;">
+                                            <span t-esc="'Rp {:,.2f}'.format(cashier_total)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-set="current_cashier" t-value="order.user_id"/>
+                                <t t-set="cashier_total" t-value="0"/>
+                            </t>
+                            
                             <t t-foreach="order.lines" t-as="line">
                                 <tr>
                                     <td><span t-field="order.name"/></td>
@@ -56,13 +74,16 @@
                                     <td style="text-align: right;"><span t-esc="'Rp {:,.2f}'.format(line.price_subtotal)"/></td>
                                 </tr>
                             </t>
-                            <!-- SUBTOTAL PER ORDER -->
+                            <t t-set="cashier_total" t-value="cashier_total + order.amount_total"/>
+                        </t>
+                        <!-- Print last cashier subtotal -->
+                        <t t-if="current_cashier">
                             <tr style="background-color: #F0F0F0;">
                                 <td colspan="12" style="text-align: left; font-weight: bold;">
-                                    Subtotal for <t t-esc="order.user_id.name"/>
+                                    Subtotal for <t t-esc="current_cashier.name"/>
                                 </td>
                                 <td style="text-align: right; font-weight: bold;">
-                                    <span t-esc="'Rp {:,.2f}'.format(order.amount_total)"/>
+                                    <span t-esc="'Rp {:,.2f}'.format(cashier_total)"/>
                                 </td>
                             </tr>
                         </t>
@@ -70,7 +91,7 @@
                         <tr style="background-color: #D3D3D3;">
                             <td colspan="12" style="text-align: left; font-weight: bold;">Grand Total</td>
                             <td style="text-align: right; font-weight: bold;">
-                                <span t-esc="'Rp {:,.2f}'.format(sum(doc.amount_total for doc in docs))"/>
+                                <span t-esc="'Rp {:,.2f}'.format(sum(doc.amount_total for doc in all_docs))"/>
                             </td>
                         </tr>
                     </tbody>
@@ -78,4 +99,4 @@
             </div>
         </t>
     </template>
-</odoo> 
+</odoo>
