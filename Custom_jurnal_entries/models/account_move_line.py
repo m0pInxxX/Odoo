@@ -8,3 +8,5 @@ class AccountMoveLine(models.Model):
     note = fields.Text(string='Note')
     debit_number = fields.Char(string='Debit Number')
     credit_number = fields.Char(string='Credit Number')
+    description = fields.Char(string='Description')
+    reference = fields.Char(string='Reference')

@@ -4,21 +4,16 @@
         <t t-call="web.html_container">
             <t t-set="all_docs" t-value="docs"/>
             <div class="page">
-                <!-- HEADER -->
                 <div style="text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 5px;">
                     Quotation Listing With Delivery Details
                 </div>
                 <div style="text-align: center; font-size: 14px; margin-bottom: 10px;">
                     <span t-esc="user.company_id.name"/>
                 </div>
-
-                <!-- User Information -->
                 <div style="text-align: right; font-size: 10px;">
                     <strong>Date:</strong>
                     <span t-esc="today_date"/>
                 </div>
-
-                <!-- TABLE CONTENT -->
                 <table style="width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 20px;" border="1">
                     <thead>
                         <tr style="background-color: #D3D3D3;">
@@ -41,11 +36,8 @@
                         <t t-set="current_cashier" t-value="False"/>
                         <t t-set="cashier_subtotal" t-value="0"/>
                         <t t-set="grand_total" t-value="0"/>
-                        
                         <t t-foreach="all_docs" t-as="doc">
-                            <!-- Handle cashier change -->
                             <t t-if="current_cashier != doc.user_id">
-                                <!-- Print previous cashier total -->
                                 <t t-if="current_cashier">
                                     <tr style="background-color: #F0F0F0;">
                                         <td colspan="12" style="text-align: left; font-weight: bold;">
@@ -56,12 +48,9 @@
                                         </td>
                                     </tr>
                                 </t>
-                                <!-- Reset cashier subtotal -->
                                 <t t-set="current_cashier" t-value="doc.user_id"/>
                                 <t t-set="cashier_subtotal" t-value="0"/>
                             </t>
-
-                            <!-- Calculate document subtotal -->
                             <t t-set="doc_subtotal" t-value="0"/>
                             <t t-foreach="doc.lines" t-as="line">
                                 <t t-set="doc_subtotal" t-value="doc_subtotal + line.price_subtotal"/>
@@ -81,15 +70,11 @@
                                     <td style="text-align: right;"><span t-esc="'Rp {:,.2f}'.format(line.price_subtotal)"/></td>
                                 </tr>
                             </t>
-
-                            <!-- Update totals if not cancelled -->
                             <t t-if="doc.state != 'cancel'">
                                 <t t-set="cashier_subtotal" t-value="cashier_subtotal + doc_subtotal"/>
                                 <t t-set="grand_total" t-value="grand_total + doc_subtotal"/>
                             </t>
                         </t>
-
-                        <!-- Print last cashier total -->
                         <t t-if="current_cashier">
                             <tr style="background-color: #F0F0F0;">
                                 <td colspan="12" style="text-align: left; font-weight: bold;">
@@ -100,8 +85,6 @@
                                 </td>
                             </tr>
                         </t>
-
-                        <!-- GRAND TOTAL -->
                         <tr style="background-color: #D3D3D3;">
                             <td colspan="12" style="text-align: left; font-weight: bold;">Grand Total</td>
                             <td style="text-align: right; font-weight: bold;">

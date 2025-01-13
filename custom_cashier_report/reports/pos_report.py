@@ -8,14 +8,12 @@ class PosReport(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         docs = self.env['pos.order'].browse(docids)
         
-        # Mengelompokkan order berdasarkan cashier
         grouped_orders = {}
         for order in docs:
             if order.user_id not in grouped_orders:
                 grouped_orders[order.user_id] = []
             grouped_orders[order.user_id].append(order)
         
-        # Mengurutkan orders per cashier
         sorted_docs = []
         for cashier in sorted(grouped_orders.keys(), key=lambda x: x.name or ''):
             sorted_docs.extend(grouped_orders[cashier])

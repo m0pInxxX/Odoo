@@ -4,7 +4,6 @@ class PosOrder(models.Model):
     _inherit = 'pos.order'
 
     def get_pos_details(self):
-        """Method to fetch POS details for the report."""
         result = []
         for line in self.lines:
             result.append({
@@ -18,13 +17,11 @@ class PosOrder(models.Model):
         return result
 
     def get_subtotal(self, doc):
-        """Calculate subtotal for a document, return 0 if cancelled"""
         if doc.state == 'cancel':
             return 0.0
         return sum(line.price_subtotal for line in doc.lines)
 
     def get_grand_total(self, docs):
-        """Calculate grand total excluding cancelled documents"""
         total = 0.0
         for doc in docs:
             if doc.state != 'cancel':
@@ -34,7 +31,6 @@ class PosOrder(models.Model):
 
     @api.depends('lines', 'lines.price_subtotal', 'state')
     def _compute_filtered_total(self):
-        """Compute total amount excluding cancelled orders"""
         for order in self:
             if order.state == 'cancel':
                 order.filtered_total = 0.0
