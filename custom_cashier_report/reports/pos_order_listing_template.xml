@@ -8,7 +8,7 @@
                     Quotation Listing With Delivery Details
                 </div>
                 <div style="text-align: center; font-size: 14px; margin-bottom: 10px;">
-                    <span t-esc="user.company_id.name"/>
+                    Toko Keramik Muncul
                 </div>
                 <div style="text-align: right; font-size: 10px;">
                     <strong>Date:</strong>
@@ -61,7 +61,7 @@
                                     <td><span t-esc="line.product_id.name[:30] + ('...' if len(line.product_id.name) > 30 else '')"/></td>
                                     <td><span t-field="doc.user_id.name"/></td>
                                     <td><span t-field="line.product_uom_id.name"/></td>
-                                    <td style="text-align: right;"><span t-field="line.qty"/></td>
+                                    <td style="text-align: right;"><span t-esc="'%.0f' % line.qty"/></td>
                                     <td style="text-align: right;"><span t-field="line.discount"/>%</td>
                                     <td style="text-align: right;">0</td>
                                     <td style="text-align: right;"><span t-esc="'Rp {:,.2f}'.format(line.price_unit)"/></td>

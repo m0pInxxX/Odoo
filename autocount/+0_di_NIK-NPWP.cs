@@ -10,14 +10,15 @@ private void tableCell8_BeforePrint(object sender, System.Drawing.Printing.Print
         if (registerNo != null)
         {
             string noIdentitas = registerNo.ToString().Trim();
-            
-            if (noIdentitas.Length == 15)
+            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+
+            if (cleanNumber.Length == 15)
             {
-                tableCell.Text =  "0" + noIdentitas ;
+                tableCell.Text =  "0" + cleanNumber ;
             }
-            else if (noIdentitas.Length == 16)
+            else if (cleanNumber.Length == 16)
             {
-                tableCell.Text = noIdentitas;
+                tableCell.Text = cleanNumber;
             }
             else
             {
@@ -46,14 +47,15 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
         if (registerNo != null)
         {
             string noIdentitas = registerNo.ToString().Trim();
-            
-            if (noIdentitas.Length == 15)
+            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+
+            if (cleanNumber.Length == 15)
             {
                 tableCell.Text = "000000" ;
             }
-            else if (noIdentitas.Length == 16)
+            else if (cleanNumber.Length == 16)
             {
-                tableCell.Text = noIdentitas + "000000";
+                tableCell.Text = cleanNumber + "000000";
             }
             else
             {
