@@ -1,79 +1,48 @@
 from odoo import models, fields, api
-from io import BytesIO
-import base64
-import xlsxwriter
-from datetime import datetime
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
 
-    def export_to_excel(self):
-        """Export POS orders to Excel file"""
-        output = BytesIO()
-        workbook = xlsxwriter.Workbook(output)
-        worksheet = workbook.add_worksheet('POS Orders')
-        
-        # Formats
-        header = workbook.add_format({'bold': True, 'align': 'center', 'border': 1, 'bg_color': '#D3D3D3'})
-        text = workbook.add_format({'align': 'left', 'border': 1})
-        number = workbook.add_format({'align': 'right', 'border': 1, 'num_format': '#,##0.00'})
-        
-        # Headers
-        headers = ['No', 'Date', 'Order', 'Customer', 'Product', 'Quantity', 'Price', 'Discount', 'Tax', 'Total']
-        for col, header_text in enumerate(headers):
-            worksheet.write(0, col, header_text, header)
-        
-        # Data
-        row = 1
-        for order in self:
-            for line in order.lines:
-                worksheet.write(row, 0, row, text)
-                worksheet.write(row, 1, order.date_order.strftime('%Y-%m-%d %H:%M:%S'), text)
-                worksheet.write(row, 2, order.name, text)
-                worksheet.write(row, 3, order.partner_id.name or 'Anonymous', text)
-                worksheet.write(row, 4, line.product_id.name, text)
-                worksheet.write(row, 5, line.qty, number)
-                worksheet.write(row, 6, line.price_unit, number)
-                worksheet.write(row, 7, line.discount, number)
-                worksheet.write(row, 8, sum(tax.amount for tax in line.tax_ids), number)
-                worksheet.write(row, 9, line.price_subtotal_incl, number)
-                row += 1
-        
-        # Column widths
-        widths = [5, 20, 15, 20, 30, 10, 12, 10, 10, 12]
-        for i, width in enumerate(widths):
-            worksheet.set_column(i, i, width)
-        
-        workbook.close()
-        
-        # Create attachment
-        filename = f'POS_Orders_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
-        attachment = self.env['ir.attachment'].create({
-            'name': filename,
-            'type': 'binary',
-            'datas': base64.b64encode(output.getvalue()),
-            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
-        
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f'/web/content/{attachment.id}?download=true',
-            'target': 'self',
-        }
+    def get_pos_details(self):
+        """Method to fetch POS details for the report."""
+        result = []
+        for line in self.lines:
+            result.append({
+                'product_code': line.product_id.default_code,
+                'product_name': line.product_id.name,
+                'quantity': line.qty,
+                'price_unit': line.price_unit,
+                'subtotal': line.price_subtotal,
+                'uom': line.product_uom_id.name,
+            })
+        return result
 
-    def print_pos_order(self):
-        """Print POS order PDF report"""
-        return self.env.ref('custom_cashier_report.action_report_pos_order_listing').report_action(self) 
+    def get_subtotal(self, doc):
+        """Calculate subtotal for a document, return 0 if cancelled"""
+        if doc.state == 'cancel':
+            return 0.0
+        return sum(line.price_subtotal for line in doc.lines)
 
+    def get_grand_total(self, docs):
+        """Calculate grand total excluding cancelled documents"""
+        total = 0.0
+        for doc in docs:
+            if doc.state != 'cancel':
+                for line in doc.lines:
+                    total += line.price_subtotal
+        return total
+
+    @api.depends('lines', 'lines.price_subtotal', 'state')
     def _compute_filtered_total(self):
+        """Compute total amount excluding cancelled orders"""
         for order in self:
             if order.state == 'cancel':
                 order.filtered_total = 0.0
             else:
-                order.filtered_total = order.amount_total
+                order.filtered_total = sum(line.price_subtotal for line in order.lines)
 
-    filtered_total = fields.Monetary(
+    filtered_total = fields.Float(
         string='Filtered Total',
         compute='_compute_filtered_total',
-        currency_field='currency_id',
+        store=True,
     ) 

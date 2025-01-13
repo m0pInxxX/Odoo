@@ -5,7 +5,6 @@ class PosReport(models.AbstractModel):
     _name = 'report.custom_cashier_report.report_pos_order_listing'
     _description = 'Custom POS Order Report'
 
-    @api.model
     def _get_report_values(self, docids, data=None):
         docs = self.env['pos.order'].browse(docids)
         
@@ -20,11 +19,11 @@ class PosReport(models.AbstractModel):
         sorted_docs = []
         for cashier in sorted(grouped_orders.keys(), key=lambda x: x.name or ''):
             sorted_docs.extend(grouped_orders[cashier])
-        
+
         return {
             'doc_ids': docids,
             'docs': sorted_docs,
+            'all_docs': docs,
             'user': self.env.user,
-            'context_timestamp': lambda ts: fields.Datetime.context_timestamp(self, ts),
-            'datetime': datetime,
+            'today_date': fields.Date.today(),
         }
