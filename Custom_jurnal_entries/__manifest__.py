@@ -1,18 +1,16 @@
 {
-    'name': 'LD Custom Journal Entries',
-    'version': '1.3.2',
+    'name': 'Custom Journal Entries',
+    'version': '1.3.1',
     'author': 'Mahendra',
     'category': 'Accounting',
-    'summary': 'Enhanced Journal Entries with Custom Fields',
+    'summary': 'Custom Sales Receipt and Bukti Kas Kecil for Journal Entries',
     'description': """
-        Extends Odoo's journal entries with:
-        - Custom payment type
-        - Additional descriptive fields
-        - Enhanced tracking and validation
+        This module adds custom report formats for journal entries:
+        - Sales Receipt
+        - Bukti Kas Kecil Keluar
     """,
     'depends': ['base', 'account'],
     'data': [
-        'security/ir.model.access.csv', 
         'data/paper_format_data.xml',
         'views/account_move_view.xml',
         'report/custom_sales_receipt.xml',
@@ -22,5 +20,4 @@
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
-    'sequence': 1,
 }

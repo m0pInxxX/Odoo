@@ -1,5 +1,8 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
@@ -10,51 +13,19 @@ class AccountMove(models.Model):
     ], string='Payment Type', 
        help='Type of payment for journal entries',
        tracking=True,
-       required=True)
+       compute='_compute_payment_type',
+       store=True)
 
-    description = fields.Char(
-        string='Description', 
-        tracking=True, 
-        help='Additional description for the journal entry'
-    )
-
-    reference = fields.Char(
-        string='Reference', 
-        tracking=True, 
-        help='External reference number'
-    )
-
-    label = fields.Char(
-        string='Label', 
-        tracking=True, 
-        help='Short label for the journal entry'
-    )
-
-    note = fields.Text(
-        string='Internal Note', 
-        help='Internal notes or comments'
-    )
-
-    total_debit = fields.Monetary(
-        string='Total Debit', 
-        compute='_compute_total_amount', 
-        store=True,
-        currency_field='company_currency_id'
-    )
-
-    total_credit = fields.Monetary(
-        string='Total Credit', 
-        compute='_compute_total_amount', 
-        store=True,
-        currency_field='company_currency_id'
-    )
-
-    @api.depends('line_ids.debit', 'line_ids.credit')
-    def _compute_total_amount(self):
-        """Compute total debit and credit amounts"""
+    @api.depends('move_type')
+    def _compute_payment_type(self):
+        """
+        Compute payment type based on move type
+        """
         for move in self:
-            move.total_debit = sum(move.line_ids.mapped('debit'))
-            move.total_credit = sum(move.line_ids.mapped('credit'))
+            if move.move_type in ['in_receipt', 'out_receipt']:
+                move.payment_type = move.move_type
+            else:
+                move.payment_type = False
 
     @api.onchange('payment_type')
     def _onchange_payment_type(self):
@@ -73,19 +44,4 @@ class AccountMove(models.Model):
                 
                 self.journal_id = default_journal
         except Exception as e:
-            self.env['ir.logging'].create({
-                'name': 'Payment Type Change Error',
-                'type': 'server',
-                'dbname': self.env.cr.dbname,
-                'level': 'ERROR',
-                'message': str(e)
-            })
-
-    @api.constrains('payment_type', 'journal_id')
-    def _check_payment_type_journal(self):
-        """
-        Validate journal type for payment type
-        """
-        for record in self:
-            if record.payment_type == 'in_receipt' and record.journal_id.type != 'cash':
-                raise ValidationError(_("Cash receipt must use a cash journal type."))
+            _logger.error(f"Error changing payment type: {str(e)}")
