@@ -24,15 +24,15 @@ class AccountMoveLine(models.Model):
         help='Additional notes for this journal entry line'
     )
 
-    @api.depends('debit', 'credit')
-    def _compute_line_total(self):
-        """Compute total amount for the line"""
-        for line in self:
-            line.line_total = line.debit - line.credit
-    
     line_total = fields.Monetary(
         string='Line Total', 
         currency_field='company_currency_id', 
         compute='_compute_line_total', 
         store=True
     )
+
+    @api.depends('debit', 'credit')
+    def _compute_line_total(self):
+        """Compute total amount for the line"""
+        for line in self:
+            line.line_total = line.debit - line.credit

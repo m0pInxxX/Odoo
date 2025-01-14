@@ -1,6 +1,6 @@
 {
     'name': 'LD Custom Journal Entries',
-    'version': '1.3.2',  # Update versi
+    'version': '1.3.2',
     'author': 'Mahendra',
     'category': 'Accounting',
     'summary': 'Enhanced Journal Entries with Custom Fields',
@@ -8,7 +8,7 @@
         Extends Odoo's journal entries with:
         - Custom payment type
         - Additional descriptive fields
-        - Enhanced tracking
+        - Enhanced tracking and validation
     """,
     'depends': ['base', 'account'],
     'data': [
@@ -22,5 +22,5 @@
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
-    'sequence': 1,  
+    'sequence': 1,
 }
