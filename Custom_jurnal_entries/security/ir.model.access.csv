@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_account_move_custom,account.move.custom,account.model_account_move,account.group_account_user,1,1,1,1
-access_account_move_line_custom,account.move.line.custom,account.model_account_move_line,account.group_account_user,1,1,1,1
+access_custom_account_move,access_custom_account_move,model_account_move,base.group_user,1,1,1,0
+access_custom_account_move_line,access_custom_account_move_line,model_account_move_line,base.group_user,1,1,1,0
+access_custom_account_move_accountant,access_custom_account_move_accountant,model_account_move,account.group_account_user,1,1,1,1
+access_custom_account_move_line_accountant,access_custom_account_move_line_accountant,model_account_move_line,account.group_account_user,1,1,1,1
