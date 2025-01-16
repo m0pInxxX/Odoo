@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Action untuk mengarsipkan produk -->
     <record id="action_delete_force_product" model="ir.actions.server">
-        <field name="name">Hapus Paksa Produk</field>
+        <field name="name">Arsipkan Produk</field>
         <field name="model_id" ref="product.model_product_template"/>
-        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" eval="False"/>
         <field name="state">code</field>
         <field name="code">
 if records:
@@ -22,15 +23,7 @@ if records:
         ])
         quants.sudo().unlink()
         
-        # Log aktivitas
-        env['mail.message'].create({
-            'model': 'product.template',
-            'res_id': record.id,
-            'message_type': 'notification',
-            'body': 'Produk diarsipkan oleh %s' % env.user.name,
-        })
-        
-        # Arsipkan produk (non-aktifkan)
+        # Arsipkan produk
         record.write({
             'active': False,
             'sale_ok': False,
@@ -45,24 +38,15 @@ action = {
         </field>
     </record>
 
+    <!-- Action untuk mengembalikan produk -->
     <record id="action_restore_product" model="ir.actions.server">
         <field name="name">Kembalikan Produk</field>
         <field name="model_id" ref="product.model_product_template"/>
-        <field name="binding_model_id" ref="product.model_product_template"/>
-        <field name="binding_view_types">list,form</field>
+        <field name="binding_model_id" eval="False"/>
         <field name="state">code</field>
         <field name="code">
 if records:
     for record in records:
-        # Log aktivitas
-        env['mail.message'].create({
-            'model': 'product.template',
-            'res_id': record.id,
-            'message_type': 'notification',
-            'body': 'Produk dikembalikan oleh %s' % env.user.name,
-        })
-        
-        # Kembalikan produk
         record.write({
             'active': True,
             'sale_ok': True,
