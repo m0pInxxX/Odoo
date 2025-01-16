@@ -35,7 +35,39 @@ if records:
             'active': False,
             'sale_ok': False,
             'purchase_ok': False,
-            'name': '[Archived] ' + record.name
+            'name': '[Archived] ' + record.name.replace('[Archived] ', '')
+        })
+        
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'reload',
+}
+        </field>
+    </record>
+
+    <record id="action_restore_product" model="ir.actions.server">
+        <field name="name">Kembalikan Produk</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    for record in records:
+        # Log aktivitas
+        env['mail.message'].create({
+            'model': 'product.template',
+            'res_id': record.id,
+            'message_type': 'notification',
+            'body': 'Produk dikembalikan oleh %s' % env.user.name,
+        })
+        
+        # Kembalikan produk
+        record.write({
+            'active': True,
+            'sale_ok': True,
+            'purchase_ok': True,
+            'name': record.name.replace('[Archived] ', '')
         })
         
 action = {

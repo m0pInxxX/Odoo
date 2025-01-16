@@ -10,8 +10,31 @@
                         type="action"
                         name="%(action_delete_force_product)d"
                         class="oe_highlight"
-                        confirm="Produk ini akan dihapus secara permanen. Apakah Anda yakin?"
-                        groups="base.group_system"/>
+                        confirm="Produk ini akan diarsipkan. Apakah Anda yakin?"
+                        groups="base.group_system"
+                        invisible="not active"/>
+                
+                <button string="Kembalikan Produk" 
+                        type="action"
+                        name="%(action_restore_product)d"
+                        class="oe_highlight"
+                        confirm="Produk ini akan dikembalikan. Apakah Anda yakin?"
+                        groups="base.group_system"
+                        invisible="active"/>
+            </xpath>
+            <xpath expr="//field[@name='active']" position="replace">
+                <field name="active"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_search_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.search.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
             </xpath>
         </field>
     </record>
