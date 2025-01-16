@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_delete_force_product" model="ir.actions.server">
+        <field name="name">Hapus Paksa Produk</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    for record in records:
+        # Hapus stock moves yang belum done
+        moves = env['stock.move'].search([
+            ('product_id.product_tmpl_id', '=', record.id),
+            ('state', '!=', 'done')
+        ])
+        moves.sudo()._action_cancel()
+        moves.sudo().unlink()
+        
+        # Hapus quants
+        quants = env['stock.quant'].search([
+            ('product_id.product_tmpl_id', '=', record.id)
+        ])
+        quants.sudo().unlink()
+        
+        # Log aktivitas
+        env['mail.message'].create({
+            'model': 'product.template',
+            'res_id': record.id,
+            'message_type': 'notification',
+            'body': 'Produk diarsipkan oleh %s' % env.user.name,
+        })
+        
+        # Arsipkan produk (non-aktifkan)
+        record.write({
+            'active': False,
+            'sale_ok': False,
+            'purchase_ok': False,
+            'name': '[Archived] ' + record.name
+        })
+        
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'reload',
+}
+        </field>
+    </record>
+</odoo> 

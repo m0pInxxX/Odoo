@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Hapus Paksa" 
+                        type="action"
+                        name="%(action_delete_force_product)d"
+                        class="oe_highlight"
+                        confirm="Produk ini akan dihapus secara permanen. Apakah Anda yakin?"
+                        groups="base.group_system"/>
+            </xpath>
+        </field>
+    </record>
+</odoo> 
