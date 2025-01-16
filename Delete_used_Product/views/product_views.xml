@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button string="Hapus Paksa" 
+                <button string="Arsipkan Produk" 
                         type="action"
                         name="%(action_delete_force_product)d"
                         class="oe_highlight"
