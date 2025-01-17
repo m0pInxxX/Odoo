@@ -12,37 +12,50 @@ private void tableCell123_BeforePrint(object sender, System.Drawing.Printing.Pri
             string uom = obj.ToString().Trim().ToUpper();
             string labelUOM;
 
-            if (uom == "BTL" || uom == "CUP" || uom == "DRUM" || uom == "JRG" || 
-                uom == "KLG" || uom == "LOAF" || uom == "PACK" || uom == "PCS" || 
-                uom == "POUCH" || uom == "SCH" || uom == "SHEET" || uom == "TPL")
+            if (uom == "DRM" || uom == "DRUM")
             {
-                labelUOM = "UM.0021";
+                labelUOM = "UM.0008";
             }
-            else if (uom == "BALL" || uom == "KTN" || uom == "PAIL" || uom == "ZAK")
+            else if (uom == "MTH" || uom == "MTR")
             {
-                labelUOM = "UM.0018";
+                labelUOM = "UM.0012";
             }
-            else if (uom == "RIM" || uom == "SET")
-            {
-                labelUOM = "UM.0019";
-            }
-            else if (uom == "LBR")
-            {
-                labelUOM = "UM.0020";
-            }
-            else if (uom == "LSN")
+            else if (uom == "DZN")
             {
                 labelUOM = "UM.0017";
             }
-            else if (uom == "BOX")
+            else if (uom == "BT" || uom == "BTG" || uom == "BTH")
+            {
+                labelUOM = "UM.0018";
+            }
+            else if (uom == "IKAT" || uom == "IKET" || uom == "PASANG" || uom == "SET")
+            {
+                labelUOM = "UM.0019";
+            }
+            else if (uom == "LBR" || uom == "LEMBAR")
+            {
+                labelUOM = "UM.0020";
+            }
+            else if (uom == "PCA" || uom == "PCS")
+            {
+                labelUOM = "UM.0021";
+            }
+            else if (uom == "BALL" || uom == "BKS" || uom == "BOX" || uom == "BOXX" || 
+                     uom == "DOS" || uom == "DOS1" || uom == "DOS2" || uom == "DOSS" || 
+                     uom == "DOZ" || uom == "DUS" || uom == "DUSS" || uom == "KOTAK" || 
+                     uom == "KT" || uom == "KTK" || uom == "KTK15" || uom == "PACK" || 
+                     uom == "PAK" || uom == "PETI" || uom == "ROL" || uom == "ROLL")
             {
                 labelUOM = "UM.0022";
             }
-		else if (uom == "KG")
+            else if (uom == "HANK" || uom == "JS" || uom == "KG" || uom == "MSP")
             {
-                labelUOM = "UM.0003";
+                labelUOM = "UM.0033";
             }
-
+            else if (uom == "T")
+            {
+                labelUOM = "UM.0034";
+            }
             else
             {
                 labelUOM = uom;
