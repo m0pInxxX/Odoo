@@ -1,5 +1,5 @@
-private void tableCell7_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-{
+private void tableCell7_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+
     try 
     {
         DevExpress.XtraReports.UI.XRTableCell cell = (DevExpress.XtraReports.UI.XRTableCell)sender;
@@ -14,21 +14,14 @@ private void tableCell7_BeforePrint(object sender, System.Drawing.Printing.Print
         }
 
         string companyName = companyNameObj.ToString().Trim();
-
-        // Daftar prefix yang akan dipindahkan ke belakang
         string[] prefixes = new[] { "PT.", "PT ", "CV.", "CV ", "PT..", "CV..", "PT .", "CV ." };
         
         foreach (var prefix in prefixes)
         {
             if (companyName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
-                // Ambil nama tanpa prefix
                 string nameWithoutPrefix = companyName.Substring(prefix.Length).Trim();
-                
-                // Bersihkan semua titik dari nama
                 nameWithoutPrefix = nameWithoutPrefix.Replace(".", "").Trim();
-                
-                // Ambil prefix tanpa tanda titik
                 string cleanPrefix = prefix.TrimEnd('.', ' ');
                 
                 cell.Text = string.Format("{0} {1}", nameWithoutPrefix, cleanPrefix);
@@ -36,11 +29,11 @@ private void tableCell7_BeforePrint(object sender, System.Drawing.Printing.Print
             }
         }
         
-        // Jika tidak ada prefix, tetap bersihkan titik
         cell.Text = companyName.Replace(".", "").Trim();
     }
     catch (Exception)
     {
         ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "-";
     }
+
 }
