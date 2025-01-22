@@ -1,3 +1,4 @@
+
 using System.Data;
 using System.Drawing;
 using DevExpress.XtraReports.UI;
@@ -165,14 +166,19 @@ private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.Pri
         if (!string.IsNullOrEmpty(npwp))
         {
             string cleanNpwp = string.Join("", System.Text.RegularExpressions.Regex.Split(npwp, @"[^\d]"));
-            if (cleanNpwp.Length == 15 || (cleanNpwp.Length == 16 && cleanNpwp[0] == '0'))
+            if (cleanNpwp.All(c => c == '0'))
             {
-                cell.Text = "Ada NPWP";
+                cell.Text = "Tidak ada keduanya";
+                return;
+            }
+            else if (cleanNpwp.Length == 15 || (cleanNpwp.Length == 16 && cleanNpwp[0] == '0'))
+            {
+                cell.Text = "NPWP";
                 return;
             }
             else if (cleanNpwp.Length == 16)
             {
-                cell.Text = "Ada NIK";
+                cell.Text = "NIK";
                 return;
             }
         }
@@ -180,18 +186,22 @@ private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.Pri
         if (!string.IsNullOrEmpty(nik))
         {
             string cleanNik = string.Join("", System.Text.RegularExpressions.Regex.Split(nik, @"[^\d]"));
-            if (cleanNik.Length == 15 || (cleanNik.Length == 16 && cleanNik[0] == '0'))
+            if (cleanNik.All(c => c == '0'))
             {
-                cell.Text = "Ada NPWP";
+                cell.Text = "Tidak ada keduanya";
+                return;
+            }
+            else if (cleanNik.Length == 15 || (cleanNik.Length == 16 && cleanNik[0] == '0'))
+            {
+                cell.Text = "NPWP";
                 return;
             }
             else if (cleanNik.Length == 16)
             {
-                cell.Text = "Ada NIK";
+                cell.Text = "NIK";
                 return;
             }
         }
-        
         cell.Text = "Tidak ada keduanya";
     }
     catch
@@ -278,9 +288,9 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
-        if (branchAddr4 != null && !string.IsNullOrEmpty(branchAddr4.ToString()) && branchAddr4 != DBNull.Value)
+        if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
             object registerNo = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
             if (registerNo != null)
@@ -288,37 +298,11 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
-                {
-                    tableCell.Text = "TIN";
-                }
-                else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
-                {
-                    tableCell.Text = "TIN";
-                }
-                else if (cleanNumber.Length == 16)
-                {
-                    tableCell.Text = "National ID";
-                }
-                else
+                if (cleanNumber.All(c => c == '0'))
                 {
                     tableCell.Text = "-";
                 }
-            }
-            else
-            {
-                tableCell.Text = "-";
-            }
-        }
-        else if (detailBand.Report.GetCurrentColumnValue("DebtorAddress4") != null)
-        {
-            object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorAddress4");
-            if (registerNo != null)
-            {
-                string noIdentitas = registerNo.ToString().Trim();
-                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-                if (cleanNumber.Length == 15)
+                else if(cleanNumber.Length == 15)
                 {
                     tableCell.Text = "TIN";
                 }
@@ -326,7 +310,7 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
                 {
                     tableCell.Text = "TIN";
                 }
-                else if (cleanNumber.Length == 16)
+		    else if (cleanNumber.Length == 16)
                 {
                     tableCell.Text = "National ID";
                 }
@@ -348,7 +332,11 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
+                {
+                    tableCell.Text = "-";
+                }
+                else if(cleanNumber.Length == 15)
                 {
                     tableCell.Text = "TIN";
                 }
@@ -356,7 +344,7 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
                 {
                     tableCell.Text = "TIN";
                 }
-                else if (cleanNumber.Length == 16)
+		        else if (cleanNumber.Length == 16)
                 {
                     tableCell.Text = "National ID";
                 }
@@ -373,7 +361,7 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
     }
     catch
     {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "'0000000000000000";
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
 
@@ -384,9 +372,9 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
-        if (branchAddr4 != null && !string.IsNullOrEmpty(branchAddr4.ToString()) && branchAddr4 != DBNull.Value)
+        if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
             object registerNo = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
             if (registerNo != null)
@@ -394,57 +382,30 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
                 {
-                    tableCell.Text = "'0" + cleanNumber;
+                    tableCell.Text = "-";
                 }
-                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
+                else if (cleanNumber.Length == 15)
                 {
-                    tableCell.Text = "'" + cleanNumber;
-                }
-		    else if (cleanNumber.Length == 16)
-                {
-                    tableCell.Text = "'0000000000000000";
-                }
-                else
-                {
-                    tableCell.Text = "'0000000000000000";
-                }
-            }
-            else
-            {
-                tableCell.Text = "'0000000000000000";
-            }
-        }
-        else if (detailBand.Report.GetCurrentColumnValue("DebtorAddress4") != null)
-        {
-            object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorAddress4");
-            if (registerNo != null)
-            {
-                string noIdentitas = registerNo.ToString().Trim();
-                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-                if (cleanNumber.Length == 15)
-                {
-                    tableCell.Text = "'0" + cleanNumber;
+                    tableCell.Text = "0" + cleanNumber ;
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber;
+                    tableCell.Text = cleanNumber ;
                 }
- 		        else if (cleanNumber.Length == 16)
+		    else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "0000000000000000";
                 }
-
                 else
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "0000000000000000";
                 }
             }
             else
             {
-                tableCell.Text = "'0000000000000000";
+                tableCell.Text = "0000000000000000";
             }
         }
         else
@@ -455,33 +416,37 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
                 {
-                    tableCell.Text = "'0" + cleanNumber;
+                    tableCell.Text = "-";
+                }
+                else if (cleanNumber.Length == 15)
+                {
+                    tableCell.Text = "0" + cleanNumber ;
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber;
+                    tableCell.Text = cleanNumber ;
                 }
- 		        else if (cleanNumber.Length == 16)
+                else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "0000000000000000" ;
                 }
-
                 else
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "0000000000000000";
                 }
             }
             else
             {
-                tableCell.Text = "'0000000000000000";
+                tableCell.Text = "0000000000000000";
             }
         }
+
     }
     catch
     {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "'0000000000000000";
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
 
@@ -548,39 +513,21 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
-        if (branchAddr4 != null && !string.IsNullOrEmpty(branchAddr4.ToString()) && branchAddr4 != DBNull.Value)
+        if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
-            string noIdentitas = branchAddr4.ToString().Trim();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-            if (cleanNumber.Length == 15)
-            {
-                tableCell.Text = "-";
-            }
-            else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
-            {
-                tableCell.Text = "-";
-            }
-            else if (cleanNumber.Length == 16)
-            {
-                tableCell.Text = cleanNumber;
-            }
-            else
-            {
-                tableCell.Text = "-";
-            }
-        }
-        else if (detailBand.Report.GetCurrentColumnValue("DebtorAddress4") != null)
-        {
-            object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorAddress4");
+            object registerNo = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
             if (registerNo != null)
             {
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
+                {
+                    tableCell.Text = "Tidak Ada Isi";
+                }
+                else if(cleanNumber.Length == 15)
                 {
                     tableCell.Text = "-";
                 }
@@ -594,12 +541,12 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
                 }
                 else
                 {
-                    tableCell.Text = "-";
+                    tableCell.Text = "Tidak Ada Isi";
                 }
             }
             else
             {
-                tableCell.Text = "-";
+                tableCell.Text = "Tidak Ada Isi";
             }
         }
         else
@@ -610,7 +557,11 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
+                {
+                    tableCell.Text = "Tidak Ada Isi";
+                }
+                else if(cleanNumber.Length == 15)
                 {
                     tableCell.Text = "-";
                 }
@@ -624,7 +575,7 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
                 }
                 else
                 {
-                    tableCell.Text = "-";
+                    tableCell.Text = "Tidak Ada Isi";
                 }
             }
             else
@@ -656,12 +607,12 @@ private void tableCell8_BeforePrint(object sender, System.Drawing.Printing.Print
         object badd3 = detailBand.Report.GetCurrentColumnValue("BranchAddress3");
         string branchAddress = badd1.ToString() + " " + badd2.ToString() + " " + badd3.ToString();
 
-        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
         
-        if (branchAddr4 != null && !string.IsNullOrEmpty(branchAddr4.ToString()) && branchAddr4 != DBNull.Value)
-            tableCell.Text = branchAddress;
-        else
+        if (branchCode == null || string.IsNullOrEmpty(branchCode.ToString()) || branchCode == DBNull.Value)
             tableCell.Text = invAddress;
+        else
+            tableCell.Text = branchAddress;
     }
     catch (Exception)
     {
@@ -675,58 +626,44 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
-        if (branchAddr4 != null && !string.IsNullOrEmpty(branchAddr4.ToString()) && branchAddr4 != DBNull.Value)
+        if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
-            string noIdentitas = branchAddr4.ToString().Trim();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-            if (cleanNumber.Length == 15)
-            {
-                tableCell.Text = "'0" + cleanNumber + "000000";
-            }
-            else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
-            {
-                tableCell.Text = "'" + cleanNumber + "000000";
-            }
-            else if (cleanNumber.Length == 16)
-            {
-                tableCell.Text = "'000000";
-            }
-            else
-            {
-                tableCell.Text = "'000000";
-            }
-        }
-        else if (detailBand.Report.GetCurrentColumnValue("DebtorAddress4") != null)
-        {
-            object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorAddress4");
+            object registerNo = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
             if (registerNo != null)
             {
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
                 {
-                    tableCell.Text = "'0" + cleanNumber + "000000";
+                    tableCell.Text = "000000";
+                }
+                else if (cleanNumber.Length == 15)
+                {
+                    tableCell.Text = "0" + cleanNumber + "000000";
+                }
+                else if (cleanNumber.Length == 16 && cleanNumber[1] == '0')
+                {
+                    tableCell.Text = "000000" ;
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber + "000000";
+                    tableCell.Text = cleanNumber + "000000";
                 }
                 else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
                 else
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
             }
             else
             {
-                tableCell.Text = "'000000";
+                tableCell.Text = "000000";
             }
         }
         else
@@ -737,32 +674,40 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
                 string noIdentitas = registerNo.ToString().Trim();
                 string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-                if (cleanNumber.Length == 15)
+                if (cleanNumber.All(c => c == '0'))
                 {
-                    tableCell.Text = "'0" + cleanNumber + "000000";
+                    tableCell.Text = "000000";
+                }
+                else if (cleanNumber.Length == 15)
+                {
+                    tableCell.Text = "0" +cleanNumber + "000000";                
+                }
+                else if (cleanNumber.Length == 16 && cleanNumber[1] == '0')
+                {
+                    tableCell.Text = "000000" ;
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber + "000000";
+                    tableCell.Text = cleanNumber + "000000";
                 }
                 else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
                 else
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
             }
             else
             {
-                tableCell.Text = "'0000000000000000";
+                tableCell.Text = "000000";
             }
         }
     }
     catch
     {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "'0000000000000000";
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
 

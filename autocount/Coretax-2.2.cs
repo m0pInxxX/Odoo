@@ -168,12 +168,12 @@ private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.Pri
             string cleanNpwp = string.Join("", System.Text.RegularExpressions.Regex.Split(npwp, @"[^\d]"));
             if (cleanNpwp.Length == 15 || (cleanNpwp.Length == 16 && cleanNpwp[0] == '0'))
             {
-                cell.Text = "Ada BRANCH NPWP";
+                cell.Text = "NPWP";
                 return;
             }
             else if (cleanNpwp.Length == 16)
             {
-                cell.Text = "Ada BRANCH NIK";
+                cell.Text = "NIK";
                 return;
             }
         }
@@ -183,12 +183,12 @@ private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.Pri
             string cleanNik = string.Join("", System.Text.RegularExpressions.Regex.Split(nik, @"[^\d]"));
             if (cleanNik.Length == 15 || (cleanNik.Length == 16 && cleanNik[0] == '0'))
             {
-                cell.Text = "Ada INVOICE NPWP";
+                cell.Text = "NPWP";
                 return;
             }
             else if (cleanNik.Length == 16)
             {
-                cell.Text = "Ada INVOICE NIK";
+                cell.Text = "NIK";
                 return;
             }
         }
@@ -405,7 +405,7 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
                 }
  		        else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = cleanNumber ;
+                    tableCell.Text = "0000000000000000" ;
                 }
 
                 else
@@ -662,4 +662,3 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
         ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
-
