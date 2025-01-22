@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="paperformat_sales_receipt" model="report.paperformat">
+        <field name="name">Sales Receipt A5</field>
+        <field name="default" eval="True"/>
+        <field name="format">A5</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+    </record>
+
+    <record id="action_report_sales_receipt" model="ir.actions.report">
+        <field name="name">Sales Receipt</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Custom_jurnal_entries.report_sales_receipt</field>
+        <field name="report_file">Custom_jurnal_entries.report_sales_receipt</field>
+        <field name="paperformat_id" ref="paperformat_sales_receipt"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo> 

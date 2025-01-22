@@ -1,5 +1,6 @@
-private void tableCell17_BeforePrint_1(object sender, System.Drawing.Printing.PrintEventArgs e) {
-  try 
+private void tableCell17_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+{
+    try 
     {
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;

@@ -14,7 +14,30 @@ class AccountMove(models.Model):
        help='Type of payment for journal entries',
        tracking=True,
        compute='_compute_payment_type',
-       store=True)
+       store=True,
+       index=True)
+
+    debit_account_id = fields.Many2one(
+        'account.account', 
+        string='Debit Account',
+        domain=[('deprecated', '=', False)],
+        tracking=True
+    )
+    credit_account_id = fields.Many2one(
+        'account.account', 
+        string='Credit Account',
+        domain=[('deprecated', '=', False)],
+        tracking=True
+    )
+
+    debit_number = fields.Char(string='Debit Account Number', related='debit_account_id.code', store=True)
+    credit_number = fields.Char(string='Credit Account Number', related='credit_account_id.code', store=True)
+
+    debit_credit_ids = fields.One2many(
+        'account.move.debit.credit',
+        'move_id',
+        string='Debit Credit Lines'
+    )
 
     @api.depends('move_type')
     def _compute_payment_type(self):
@@ -45,3 +68,22 @@ class AccountMove(models.Model):
                 self.journal_id = default_journal
         except Exception as e:
             _logger.error(f"Error changing payment type: {str(e)}")
+
+    @api.onchange('debit_account_id', 'credit_account_id', 'amount')
+    def _onchange_accounts(self):
+        if self.move_type in ['out_receipt', 'in_receipt']:
+            lines = []
+            if self.debit_account_id:
+                lines.append((0, 0, {
+                    'account_id': self.debit_account_id.id,
+                    'debit': self.amount,
+                    'credit': 0.0,
+                }))
+            if self.credit_account_id:
+                lines.append((0, 0, {
+                    'account_id': self.credit_account_id.id,
+                    'debit': 0.0,
+                    'credit': self.amount,
+                }))
+            if lines:
+                self.line_ids = [(5, 0, 0)] + lines

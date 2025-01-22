@@ -2,72 +2,74 @@ private void tableCell8_BeforePrint(object sender, System.Drawing.Printing.Print
 {
     try 
     {
-        DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
-        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
+        DevExpress.XtraReports.UI.XRTableCell cell = (DevExpress.XtraReports.UI.XRTableCell)sender;
+        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)cell.Band;
         
         object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorRegisterNo");
         
         if (registerNo != null)
         {
             string noIdentitas = registerNo.ToString().Trim();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-            if (cleanNumber.Length == 15)
+            
+            if (noIdentitas.Length == 15 || noIdentitas.Length == 16)
             {
-                tableCell.Text =  "0" + cleanNumber ;
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                cell.Text = "0" + cleanNumber;
             }
-            else if (cleanNumber.Length == 16)
+            else if (noIdentitas.Length >= 20)
             {
-                tableCell.Text = cleanNumber;
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                cell.Text = cleanNumber;
             }
             else
             {
-                tableCell.Text = "-";
+                cell.Text = "-";
             }
         }
         else
         {
-            tableCell.Text = "-";
+            cell.Text = "-";
         }
     }
-    catch (Exception ex)
+    catch (Exception)
     {
         ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "-";
     }
 }
 
-private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-	try 
+private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+{
+    try 
     {
-        DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
-        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
+        DevExpress.XtraReports.UI.XRTableCell cell = (DevExpress.XtraReports.UI.XRTableCell)sender;
+        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)cell.Band;
         
         object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorRegisterNo");
         
         if (registerNo != null)
         {
             string noIdentitas = registerNo.ToString().Trim();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-            if (cleanNumber.Length == 15)
+            
+            if (noIdentitas.Length == 15 || noIdentitas.Length == 16)
             {
-                tableCell.Text = "000000" ;
+                cell.Text = "000000";
             }
-            else if (cleanNumber.Length == 16)
+            else if (noIdentitas.Length >= 20)
             {
-                tableCell.Text = cleanNumber + "000000";
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                cell.Text = "0" + cleanNumber;
             }
             else
             {
-                tableCell.Text = "-";
+                cell.Text = "-";
             }
         }
         else
         {
-            tableCell.Text = "-";
+            cell.Text = "-";
         }
     }
-    catch (Exception ex)
+    catch (Exception)
     {
         ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "-";
     }

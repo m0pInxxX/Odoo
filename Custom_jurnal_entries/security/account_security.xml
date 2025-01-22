@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.model.access" id="access_account_move_debit_credit_user">
+            <field name="name">account.move.debit.credit user</field>
+            <field name="model_id" ref="model_account_move_debit_credit"/>
+            <field name="group_id" ref="account.group_account_invoice"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record model="ir.model.access" id="access_account_move_debit_credit_manager">
+            <field name="name">account.move.debit.credit manager</field>
+            <field name="model_id" ref="model_account_move_debit_credit"/>
+            <field name="group_id" ref="account.group_account_manager"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <!-- Record Rule -->
+        <record id="account_move_debit_credit_comp_rule" model="ir.rule">
+            <field name="name">Account Move Debit Credit multi-company</field>
+            <field name="model_id" search="[('model', '=', 'account.move.debit.credit')]"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+    </data>
+</odoo> 

@@ -2,72 +2,77 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
 {
     try 
     {
-        DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
-        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
-        
-        object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorRegisterNo");
-        
-        if (registerNo != null)
-        {
-            string noIdentitas = registerNo.ToString();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-            
-            if (cleanNumber.Length == 15)
-            {
-                tableCell.Text = "Ini LimaBelas NPWP";
-            }
-            else if (cleanNumber.Length == 16)
-            {
-                tableCell.Text = "Ini EnamBelas NIK";
-            }
-            else
-            {
-                tableCell.Text = "Ini Kurang dari 15 atau lebih dari 16";
-            }
-        }
-        else
-        {
-            tableCell.Text = "-";
-        }
-    }
-    catch (Exception ex)
-    {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "-";
-    }
-}
-
-private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-try 
-    {
-        DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
-        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
+        DevExpress.XtraReports.UI.XRTableCell cell = (DevExpress.XtraReports.UI.XRTableCell)sender;
+        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)cell.Band;
         
         object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorRegisterNo");
         
         if (registerNo != null)
         {
             string noIdentitas = registerNo.ToString().Trim();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
-
-            if (cleanNumber.Length == 15)
+            
+            if (noIdentitas.Length == 15)
             {
-                tableCell.Text = cleanNumber ;
+                cell.Text = "Ini LimaBelas NPWP";
             }
-            else if (cleanNumber.Length == 16)
+            else if (noIdentitas.Length == 16)
             {
-                tableCell.Text = cleanNumber;
+                cell.Text = "Ini EnamBelas NIK";
+            }
+            else if (noIdentitas.Length == 21)
+            {
+                cell.Text = "Ini NPWP dengan 000000";
             }
             else
             {
-                tableCell.Text = "-";
+                cell.Text = "Ini Kurang dari 15 atau lebih dari 16";
             }
         }
         else
         {
-            tableCell.Text = "-";
+            cell.Text = "-";
         }
     }
-    catch (Exception ex)
+    catch (Exception)
+    {
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "-";
+    }
+}
+
+private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+{
+    try 
+    {
+        DevExpress.XtraReports.UI.XRTableCell cell = (DevExpress.XtraReports.UI.XRTableCell)sender;
+        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)cell.Band;
+        
+        object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorRegisterNo");
+        
+        if (registerNo != null)
+        {
+            string noIdentitas = registerNo.ToString().Trim();
+            
+            if (noIdentitas.Length == 15 || noIdentitas.Length == 16)
+            {
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                cell.Text = cleanNumber;
+            }
+            else if (noIdentitas.Length == 21)
+            {
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                cell.Text = cleanNumber;
+            }
+            else
+            {
+                cell.Text = "-";
+            }
+        }
+        else
+        {
+            cell.Text = "-";
+        }
+    }
+    catch (Exception)
     {
         ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "-";
     }
