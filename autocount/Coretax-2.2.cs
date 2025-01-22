@@ -297,7 +297,7 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
                 {
                     tableCell.Text = "TIN";
                 }
-		        else if (cleanNumber.Length == 16)
+		    else if (cleanNumber.Length == 16)
                 {
                     tableCell.Text = "National ID";
                 }
@@ -379,12 +379,12 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
                 }
                 else
                 {
-                    tableCell.Text = "?";
+                    tableCell.Text = "0000000000000000";
                 }
             }
             else
             {
-                tableCell.Text = "?";
+                tableCell.Text = "0000000000000000";
             }
         }
         else
@@ -410,12 +410,12 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
 
                 else
                 {
-                    tableCell.Text = "?";
+                    tableCell.Text = "0000000000000000";
                 }
             }
             else
             {
-                tableCell.Text = "?";
+                tableCell.Text = "0000000000000000";
             }
         }
  
@@ -575,7 +575,7 @@ private void tableCell8_BeforePrint(object sender, System.Drawing.Printing.Print
         object badd3 = detailBand.Report.GetCurrentColumnValue("BranchAddress3");
         string branchAddress = badd1.ToString() + " " + badd2.ToString() + " " + badd3.ToString();
 
-        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
         
         if (branchCode == null || string.IsNullOrEmpty(branchCode.ToString()) || branchCode == DBNull.Value)
             tableCell.Text = invAddress;
@@ -637,7 +637,7 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
                 if (cleanNumber.Length == 15)
                 {
                     tableCell.Text = "0" +cleanNumber + "000000";                
-                }
+                }		    
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
                     tableCell.Text = cleanNumber + "000000";
