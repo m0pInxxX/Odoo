@@ -168,12 +168,12 @@ private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.Pri
             string cleanNpwp = string.Join("", System.Text.RegularExpressions.Regex.Split(npwp, @"[^\d]"));
             if (cleanNpwp.Length == 15 || (cleanNpwp.Length == 16 && cleanNpwp[0] == '0'))
             {
-                cell.Text = "Ada NPWP";
+                cell.Text = "Ada BRANCH NPWP";
                 return;
             }
             else if (cleanNpwp.Length == 16)
             {
-                cell.Text = "Ada NIK";
+                cell.Text = "Ada BRANCH NIK";
                 return;
             }
         }
@@ -183,12 +183,12 @@ private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.Pri
             string cleanNik = string.Join("", System.Text.RegularExpressions.Regex.Split(nik, @"[^\d]"));
             if (cleanNik.Length == 15 || (cleanNik.Length == 16 && cleanNik[0] == '0'))
             {
-                cell.Text = "Ada NPWP";
+                cell.Text = "Ada INVOICE NPWP";
                 return;
             }
             else if (cleanNik.Length == 16)
             {
-                cell.Text = "Ada NIK";
+                cell.Text = "Ada INVOICE NIK";
                 return;
             }
         }
@@ -279,7 +279,7 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
         if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
@@ -344,7 +344,7 @@ private void tableCell3_BeforePrint(object sender, System.Drawing.Printing.Print
     }
     catch
     {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "'0000000000000000";
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
 
@@ -355,7 +355,7 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
         if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
@@ -367,24 +367,24 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
 
                 if (cleanNumber.Length == 15)
                 {
-                    tableCell.Text = "'0" + cleanNumber;
+                    tableCell.Text = "0" + cleanNumber ;
                 }
-                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
+                else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber;
+                    tableCell.Text = cleanNumber ;
                 }
 		    else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "0000000000000000";
                 }
                 else
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "?";
                 }
             }
             else
             {
-                tableCell.Text = "'0000000000000000";
+                tableCell.Text = "?";
             }
         }
         else
@@ -397,32 +397,32 @@ private void tableCell18_BeforePrint(object sender, System.Drawing.Printing.Prin
 
                 if (cleanNumber.Length == 15)
                 {
-                    tableCell.Text = "'0" + cleanNumber;
+                    tableCell.Text = "0" + cleanNumber ;
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber;
+                    tableCell.Text = cleanNumber ;
                 }
  		        else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = cleanNumber ;
                 }
 
                 else
                 {
-                    tableCell.Text = "'0000000000000000";
+                    tableCell.Text = "?";
                 }
             }
             else
             {
-                tableCell.Text = "'0000000000000000";
+                tableCell.Text = "?";
             }
         }
  
     }
     catch
     {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "'0000000000000000";
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
 
@@ -489,7 +489,7 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
         if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
@@ -575,7 +575,7 @@ private void tableCell8_BeforePrint(object sender, System.Drawing.Printing.Print
         object badd3 = detailBand.Report.GetCurrentColumnValue("BranchAddress3");
         string branchAddress = badd1.ToString() + " " + badd2.ToString() + " " + badd3.ToString();
 
-        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
         if (branchCode == null || string.IsNullOrEmpty(branchCode.ToString()) || branchCode == DBNull.Value)
             tableCell.Text = invAddress;
@@ -594,7 +594,7 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
         if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
         {
@@ -606,24 +606,24 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
 
                 if (cleanNumber.Length == 15)
                 {
-                    tableCell.Text = "'0" + cleanNumber + "000000";
+                    tableCell.Text = "0" + cleanNumber + "000000";
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber + "000000";
+                    tableCell.Text = cleanNumber + "000000";
                 }
 		        else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
                 else
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
             }
             else
             {
-                tableCell.Text = "'000000";
+                tableCell.Text = "000000";
             }
         }
         else
@@ -636,30 +636,30 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
 
                 if (cleanNumber.Length == 15)
                 {
-                    tableCell.Text = "'0" +cleanNumber + "000000";                
+                    tableCell.Text = "0" +cleanNumber + "000000";                
                 }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
-                    tableCell.Text = "'" + cleanNumber + "000000";
+                    tableCell.Text = cleanNumber + "000000";
                 }
 		        else if (cleanNumber.Length == 16)
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
                 else
                 {
-                    tableCell.Text = "'000000";
+                    tableCell.Text = "000000";
                 }
             }
             else
             {
-                tableCell.Text = "'000000";
+                tableCell.Text = "000000";
             }
         }
     }
     catch
     {
-        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "'0000000000000000";
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
 

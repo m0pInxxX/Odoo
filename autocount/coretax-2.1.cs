@@ -548,8 +548,7 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
         DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
         
-        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("Master.BranchAddress4");
-        object debtorAddr4 = detailBand.Report.GetCurrentColumnValue("Master.DebtorAddress4");
+        object branchAddr4 = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
         
         if (branchAddr4 != null && !string.IsNullOrEmpty(branchAddr4.ToString()) && branchAddr4 != DBNull.Value)
         {
@@ -573,22 +572,30 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
                 tableCell.Text = "-";
             }
         }
-        else if (debtorAddr4 != null && !string.IsNullOrEmpty(debtorAddr4.ToString()) && debtorAddr4 != DBNull.Value)
+        else if (detailBand.Report.GetCurrentColumnValue("DebtorAddress4") != null)
         {
-            string noIdentitas = debtorAddr4.ToString().Trim();
-            string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+            object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorAddress4");
+            if (registerNo != null)
+            {
+                string noIdentitas = registerNo.ToString().Trim();
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
 
-            if (cleanNumber.Length == 15)
-            {
-                tableCell.Text = "-";
-            }
-            else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
-            {
-                tableCell.Text = "-";
-            }
-            else if (cleanNumber.Length == 16)
-            {
-                tableCell.Text = cleanNumber;
+                if (cleanNumber.Length == 15)
+                {
+                    tableCell.Text = "-";
+                }
+                else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
+                {
+                    tableCell.Text = "-";
+                }
+                else if (cleanNumber.Length == 16)
+                {
+                    tableCell.Text = cleanNumber;
+                }
+                else
+                {
+                    tableCell.Text = "-";
+                }
             }
             else
             {
@@ -597,7 +604,7 @@ private void tableCell6_BeforePrint(object sender, System.Drawing.Printing.Print
         }
         else
         {
-            object registerNo = detailBand.Report.GetCurrentColumnValue("Master.InvAddr4");
+            object registerNo = detailBand.Report.GetCurrentColumnValue("InvAddr4");
             if (registerNo != null)
             {
                 string noIdentitas = registerNo.ToString().Trim();
