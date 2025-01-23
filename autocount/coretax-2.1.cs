@@ -2,7 +2,7 @@
 using System.Data;
 using System.Drawing;
 using DevExpress.XtraReports.UI;
-
+using System.Linq;
 
 int count = 0;
 
@@ -644,10 +644,6 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
                 {
                     tableCell.Text = "0" + cleanNumber + "000000";
                 }
-                else if (cleanNumber.Length == 16 && cleanNumber[1] == '0')
-                {
-                    tableCell.Text = "000000" ;
-                }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
                     tableCell.Text = cleanNumber + "000000";
@@ -682,10 +678,6 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
                 {
                     tableCell.Text = "0" +cleanNumber + "000000";                
                 }
-                else if (cleanNumber.Length == 16 && cleanNumber[1] == '0')
-                {
-                    tableCell.Text = "000000" ;
-                }
                 else if (cleanNumber.Length == 16 && cleanNumber[0] == '0')
                 {
                     tableCell.Text = cleanNumber + "000000";
@@ -710,5 +702,3 @@ private void tableCell10_BeforePrint(object sender, System.Drawing.Printing.Prin
         ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
     }
 }
-
-
