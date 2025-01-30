@@ -33,8 +33,10 @@ class AccountMove(models.Model):
     debit_number = fields.Char(string='Debit Account Number', related='debit_account_id.code', store=True)
     credit_number = fields.Char(string='Credit Account Number', related='credit_account_id.code', store=True)
 
-    debit_credit_ids = fields.One2many(
-        'account.move.debit.credit',
+    amount = fields.Monetary(string='Amount', tracking=True)
+
+    x_debit_credit_ids = fields.One2many(
+        'x_account_move_debit_credit',
         'move_id',
         string='Debit Credit Lines'
     )
@@ -76,14 +78,14 @@ class AccountMove(models.Model):
             if self.debit_account_id:
                 lines.append((0, 0, {
                     'account_id': self.debit_account_id.id,
-                    'debit': self.amount,
+                    'debit': self.amount or 0.0,
                     'credit': 0.0,
                 }))
             if self.credit_account_id:
                 lines.append((0, 0, {
                     'account_id': self.credit_account_id.id,
                     'debit': 0.0,
-                    'credit': self.amount,
+                    'credit': self.amount or 0.0,
                 }))
             if lines:
                 self.line_ids = [(5, 0, 0)] + lines

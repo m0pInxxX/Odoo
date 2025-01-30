@@ -148,6 +148,58 @@ private void SummaryBand1_BeforePrint(object sender, System.Drawing.Printing.Pri
 }
 */
 
+private void tableCell42_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+{
+    try 
+    {
+        DevExpress.XtraReports.UI.XRTableCell tableCell = (DevExpress.XtraReports.UI.XRTableCell)sender;
+        DevExpress.XtraReports.UI.DetailBand detailBand = (DevExpress.XtraReports.UI.DetailBand)tableCell.Band;
+        
+        object branchCode = detailBand.Report.GetCurrentColumnValue("BranchCode");
+        
+        if (branchCode != null && !string.IsNullOrEmpty(branchCode.ToString()) && branchCode != DBNull.Value)
+        {
+            object registerNo = detailBand.Report.GetCurrentColumnValue("BranchAddress4");
+            object docNo = detailBand.Report.GetCurrentColumnValue("DocNo");
+
+            if (registerNo != null)
+            {
+                string noIdentitas = registerNo.ToString().Trim();
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                string no = docNo.ToString().Trim();
+
+                tableCell.Text = no;
+            }
+            else
+            {
+                tableCell.Text = "Tidak Ada Isi";
+            }
+        }
+        else
+        {
+            object registerNo = detailBand.Report.GetCurrentColumnValue("DebtorAddress4");
+            object docNo = detailBand.Report.GetCurrentColumnValue("DocNo");
+
+            if (registerNo != null)
+            {
+                string noIdentitas = registerNo.ToString().Trim();
+                string cleanNumber = string.Join("", System.Text.RegularExpressions.Regex.Split(noIdentitas, @"[^\d]"));
+                string no = docNo.ToString().Trim();
+
+                tableCell.Text = no;
+            }
+            else
+            {
+                tableCell.Text = "Tidak Ada Isi";
+            }
+        }
+    }
+    catch
+    {
+        ((DevExpress.XtraReports.UI.XRTableCell)sender).Text = "0000000000000000";
+    }
+}
+
 private void tableCell123_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
 {
     try 

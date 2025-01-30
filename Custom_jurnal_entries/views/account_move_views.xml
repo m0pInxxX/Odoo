@@ -19,4 +19,15 @@
             </xpath>
         </field>
     </record>
+    <record id="view_account_move_filter_inherit" model="ir.ui.view">
+        <field name="name">account.move.select.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='posted']" position="after">
+                <filter string="Sales Receipt" name="sales_receipt" domain="[('journal_id.type', '=', 'sale')]"/>
+                <filter string="Bukti Kas Kecil" name="petty_cash" domain="[('journal_id.type', '=', 'cash')]"/>
+            </xpath>
+        </field>
+    </record>
 </odoo> 

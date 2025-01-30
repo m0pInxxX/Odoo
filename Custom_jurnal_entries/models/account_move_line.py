@@ -6,8 +6,6 @@ class AccountMoveLine(models.Model):
     invoice_number = fields.Char(related='move_id.name', store=True)
     label = fields.Char(string='Label')
     note = fields.Text(string='Note')
-    debit_number = fields.Char(string='Debit Number')
-    credit_number = fields.Char(string='Credit Number')
 
     @api.depends('purchase_line_id', 'sale_line_ids', 'product_id')
     def _compute_name(self):
