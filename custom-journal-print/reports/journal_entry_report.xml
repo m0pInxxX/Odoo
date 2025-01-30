@@ -1,11 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Template for PDF Report -->
     <template id="report_journal_entry">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <div class="page">
-                    <h2>Journal Entry: <t t-esc="o.name"/></h2>
-                    <p><strong>Date:</strong> <t t-esc="o.date"/></p>
-                    <p><strong>Journal:</strong> <t t-esc="o.journal_id.name"/></p>
+                    <!-- Custom Header -->
+                    <div t-if="o.custom_header" class="custom-header">
+                        <h3 t-esc="o.custom_header"/>
+                    </div>
+
+                    <!-- Journal Entry Details -->
+                    <h2>Journal Entry: <span t-esc="o.name"/></h2>
+                    <p><strong>Date:</strong> <span t-esc="o.date"/></p>
+                    <p><strong>Journal:</strong> <span t-esc="o.journal_id.name"/></p>
+
+                    <!-- Account Lines Table -->
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -17,25 +27,32 @@
                         <tbody>
                             <t t-foreach="o.line_ids" t-as="line">
                                 <tr>
-                                    <td><t t-esc="line.account_id.name"/></td>
-                                    <td><t t-esc="line.debit"/></td>
-                                    <td><t t-esc="line.credit"/></td>
+                                    <td t-esc="line.account_id.name"/>  
+                                    <td t-esc="line.debit"/>
+                                    <td t-esc="line.credit"/>
                                 </tr>
                             </t>
                         </tbody>
                     </table>
+
+                    <!-- Custom Footer -->
+                    <div t-if="o.custom_footer" class="custom-footer">
+                        <p t-esc="o.custom_footer"/>
+                    </div>
                 </div>
             </t>
         </t>
     </template>
 
+    <!-- Report Action -->
     <report
         id="action_report_journal_entry"
         model="account.move"
-        string="Journal Entry"
+        string="Custom Journal Entry"
         report_type="qweb-pdf"
         name="custom_journal_print.report_journal_entry"
-        file="custom_journal_print.report_journal_entry"
+        file="account.move"
+        paperformat="a4"
         print_report_name="'Journal Entry - %s' % (object.name)"
     />
 </odoo>

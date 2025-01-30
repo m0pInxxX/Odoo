@@ -5,3 +5,4 @@ class AccountMove(models.Model):
 
     custom_header = fields.Text(string='Custom Header')
     custom_footer = fields.Text(string='Custom Footer')
+    custom_field = fields.Char(string='Custom Field')

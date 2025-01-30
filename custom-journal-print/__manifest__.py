@@ -11,9 +11,8 @@
     'depends': ['base', 'account'],
     'data': [
         'security/ir.model.access.csv',
-        'models/account_move.py',
-        'report/custom_journal_report.xml',
-        'report/custom_journal_report_template.xml',
+        'views/journal_entry_views.xml',
+        'report/journal_entry_report.xml',
     ],
     'installable': True,
     'application': True,
