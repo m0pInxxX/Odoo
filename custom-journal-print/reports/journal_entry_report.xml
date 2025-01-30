@@ -1,0 +1,41 @@
+<odoo>
+    <template id="report_journal_entry">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Journal Entry: <t t-esc="o.name"/></h2>
+                    <p><strong>Date:</strong> <t t-esc="o.date"/></p>
+                    <p><strong>Journal:</strong> <t t-esc="o.journal_id.name"/></p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Account</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.line_ids" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line.account_id.name"/></td>
+                                    <td><t t-esc="line.debit"/></td>
+                                    <td><t t-esc="line.credit"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="action_report_journal_entry"
+        model="account.move"
+        string="Journal Entry"
+        report_type="qweb-pdf"
+        name="custom_journal_print.report_journal_entry"
+        file="custom_journal_print.report_journal_entry"
+        print_report_name="'Journal Entry - %s' % (object.name)"
+    />
+</odoo>

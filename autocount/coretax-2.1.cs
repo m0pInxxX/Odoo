@@ -151,57 +151,49 @@ private void SummaryBand1_BeforePrint(object sender, System.Drawing.Printing.Pri
 
 private void tableCell133_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
 {
-    try 
+    try
     {
         DevExpress.XtraReports.UI.XRTableCell cell = (DevExpress.XtraReports.UI.XRTableCell)sender;
         string npwp = "";
         string nik = "";
         
-        if (cell.Text != null) 
-            npwp = cell.Text.ToString();  
+        if (cell.Text != null)
+            npwp = cell.Text.ToString();
             
-        if (cell.Tag != null)   
-            nik = cell.Tag.ToString();    
-        
-        if (!string.IsNullOrEmpty(npwp))
+        if (cell.Tag != null)
+            nik = cell.Tag.ToString();
+
+        string cleanNpwp = string.Join("", System.Text.RegularExpressions.Regex.Split(npwp, @"[^\d]"));
+        string cleanNik = string.Join("", System.Text.RegularExpressions.Regex.Split(nik, @"[^\d]"));
+
+        if (!string.IsNullOrEmpty(cleanNpwp) && !cleanNpwp.All(c => c == '0'))
         {
-            string cleanNpwp = string.Join("", System.Text.RegularExpressions.Regex.Split(npwp, @"[^\d]"));
-            if (cleanNpwp.All(c => c == '0'))
-            {
-                cell.Text = "Tidak ada keduanya";
-                return;
-            }
-            else if (cleanNpwp.Length == 15 || (cleanNpwp.Length == 16 && cleanNpwp[0] == '0'))
+            if (cleanNpwp.Length == 15 || (cleanNpwp.Length == 16 && cleanNpwp[0] == '0'))
             {
                 cell.Text = "NPWP";
                 return;
             }
-            else if (cleanNpwp.Length == 16)
+            if (cleanNpwp.Length == 16)
             {
                 cell.Text = "NIK";
                 return;
             }
         }
-        
-        if (!string.IsNullOrEmpty(nik))
+
+        if (!string.IsNullOrEmpty(cleanNik) && !cleanNik.All(c => c == '0'))
         {
-            string cleanNik = string.Join("", System.Text.RegularExpressions.Regex.Split(nik, @"[^\d]"));
-            if (cleanNik.All(c => c == '0'))
-            {
-                cell.Text = "Tidak ada keduanya";
-                return;
-            }
-            else if (cleanNik.Length == 15 || (cleanNik.Length == 16 && cleanNik[0] == '0'))
+            if (cleanNik.Length == 15 || (cleanNik.Length == 16 && cleanNik[0] == '0'))
             {
                 cell.Text = "NPWP";
                 return;
             }
-            else if (cleanNik.Length == 16)
+            if (cleanNik.Length == 16)
             {
                 cell.Text = "NIK";
                 return;
             }
         }
+
         cell.Text = "Tidak ada keduanya";
     }
     catch

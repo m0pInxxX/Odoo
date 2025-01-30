@@ -1,0 +1,4 @@
+<odoo>
+    <menuitem id="accounting_menu" name="Accounting" sequence="10"/>
+    <menuitem id="sales_receipt_menu" name="Sales Receipts" parent="accounting_menu" sequence="10"/>
+</odoo>
