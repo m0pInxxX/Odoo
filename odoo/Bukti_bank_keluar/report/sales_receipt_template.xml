@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_petty_cash">
+    <template id="report_bukti_bank_keluar">
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
                 <div class="page" style="font-size: 14px; padding: 20px;">
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <strong style="color: #B22222;">BUKTI KAS KECIL KELUAR</strong>
+                        <strong style="color: #B22222;">BUKTI BANK KELUAR</strong>
                     </div>
-                    <div class="row mb-4">
+                    <div class="row mb-3">
                         <div class="col-6">
-                            <strong>PAY TO</strong>
+                            <strong>Dibayarkan Kepada:</strong>
                             <span t-field="o.partner_id"/>
                         </div>
                         <div class="col-6" style="text-align: right;">
@@ -17,11 +17,7 @@
                             <div>Date: <span t-field="o.date"/></div>
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <strong>PAY THE SUM OF</strong><br/>
-                        <span t-esc="o.currency_id.amount_to_text(o.amount_total)" style="text-transform: uppercase;"/>
-                    </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <strong>Payment Issued</strong>
                         <table class="table table-sm table-bordered">
                             <tr>
@@ -30,7 +26,7 @@
                                 <th>Payment Amount</th>
                             </tr>
                             <tr>
-                                <td>CASH</td>
+                                <td>CHEQUE</td>
                                 <td></td>
                                 <td class="text-right">
                                     <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
@@ -38,7 +34,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <strong>Paid For</strong>
                         <table class="table table-sm">
                             <tr>
@@ -59,11 +55,16 @@
                             </t>
                         </table>
                     </div>
-                    <div class="text-right mb-4">
-                        <strong>TOTAL:</strong>
-                        <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="color: #B22222;"/>
+                    <div class="row mb-2">
+                        <div class="col-8 text-left">
+                            <em>Terbilang: <span t-esc="o.currency_id.amount_to_text(o.amount_total)" style="text-transform: uppercase;"/></em>
+                        </div>
+                        <div class="col-4 text-right">
+                            <strong>TOTAL:</strong>
+                            <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="color: #B22222;"/>
+                        </div>
                     </div>
-                    <div class="row" style="margin-top: 15px;">
+                    <div class="row" style="margin-top: 25px;">
                         <div class="col-3 text-center">
                             <p>PEMBUKUAN</p>
                             <br/><br/><br/>
