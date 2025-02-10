@@ -1,213 +1,123 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_sales_receipt">
-        <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
-                <div class="page custom_receipt">
-                    <!-- Header -->
-                    <div style="text-align: left; margin-bottom: 10px;">
-                        <span t-field="o.company_id.name"/>
+                <div class="page" style="font-size: 14px;">
+                    <div style="margin-bottom: 20px;">
+                        <strong t-field="o.company_id.name"/>
                     </div>
-
-                    <!-- Title -->
-                    <div style="text-align: center; margin: 20px 0;">
+                    <div style="text-align: center; margin-bottom: 20px;">
                         <strong>SALES RECEIPT</strong>
                     </div>
-
-                    <!-- Receipt Info -->
-                    <table class="table table-sm table-bordered" style="margin-bottom: 20px;">
-                        <tr>
-                            <td style="width: 50%;">
-                                <strong>Received from:</strong>
-                                <span t-field="o.partner_id.name"/>
-                            </td>
-                            <td>
-                                <div><strong>Number: </strong><span t-field="o.name"/></div>
-                                <div><strong>Date: </strong><span t-field="o.date" t-options='{"format": "dd-MMM-yy"}'/></div>
-                                <div><strong>Amount: </strong><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <!-- Payment Details -->
-                    <div style="margin-bottom: 10px;">For payment of outstanding invoice as follows:</div>
-                    <table class="table table-sm table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Invoice Number</th>
-                                <th>Invoice Date</th>
-                                <th>Total Invoice</th>
-                                <th>Income Tax</th>
-                                <th>Payment Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span t-field="o.ref"/></td>
-                                <td><span t-field="o.invoice_date"/></td>
-                                <td><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                <td><span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                <td><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- Description -->
-                    <div style="margin: 20px 0;">
-                        <strong>Description:</strong>
-                        <div><span t-field="o.ref"/></div>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Received from:</strong>
+                            <span t-field="o.partner_id"/>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <div>Number: <span t-field="o.name"/></div>
+                            <div>Date: <span t-field="o.date"/></div>
+                            <div>Amount: <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                        </div>
                     </div>
-
-                    <!-- Journal Items -->
-                    <table class="table table-sm table-bordered">
-                        <thead>
-                            <tr>
-                                <th colspan="2" class="text-center">DEBIT</th>
-                                <th colspan="2" class="text-center">CREDIT</th>
-                            </tr>
-                            <tr>
-                                <th>Account No.</th>
-                                <th>Amount</th>
-                                <th>Account No.</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-set="debit_lines" t-value="o.line_ids.filtered(lambda l: l.debit > 0)"/>
-                            <t t-set="credit_lines" t-value="o.line_ids.filtered(lambda l: l.credit > 0)"/>
-                            <tr>
-                                <t t-foreach="debit_lines" t-as="debit">
-                                    <td><span t-field="debit.account_id.code"/></td>
-                                    <td><span t-field="debit.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                    <div style="margin-top: 20px;">
+                        <strong>For payment of outstanding invoice as follows:</strong>
+                        <table class="table table-sm table-bordered" style="margin-top: 10px;">
+                            <thead>
+                                <tr>
+                                    <th>Invoice Number</th>
+                                    <th>Invoice Date</th>
+                                    <th>Total Invoice</th>
+                                    <th>Income Tax</th>
+                                    <th>Payment Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.ref"/></td>
+                                    <td><span t-field="o.invoice_date"/></td>
+                                    <td><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    <td><span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    <td><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Description:</strong>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <p style="margin-bottom: 5px;"><span t-field="line.name"/></p>
                                 </t>
-                                <t t-foreach="credit_lines" t-as="credit">
-                                    <td><span t-field="credit.account_id.code"/></td>
-                                    <td><span t-field="credit.credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                </t>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- Signatures -->
-                    <table class="table table-borderless" style="margin-top: 30px;">
-                        <tr>
-                            <td style="width: 25%; text-align: center;">Prepared By</td>
-                            <td style="width: 25%; text-align: center;">Checked By</td>
-                            <td style="width: 25%; text-align: center;">Received</td>
-                            <td style="width: 25%; text-align: center;">Approved</td>
-                        </tr>
-                        <tr>
-                            <td style="height: 60px;"></td>
-                            <td style="height: 60px;"></td>
-                            <td style="height: 60px;"></td>
-                            <td style="height: 60px;"></td>
-                        </tr>
-                        <tr>
-                            <td style="border-top: 1px solid black;"></td>
-                            <td style="border-top: 1px solid black;"></td>
-                            <td style="border-top: 1px solid black;"></td>
-                            <td style="border-top: 1px solid black;"></td>
-                        </tr>
-                    </table>
-                </div>
-            </t>
-        </t>
-    </template>
-</odoo> 
-                <t t-call="web.external_layout">
-                    <div class="page custom_receipt">
-                        <div class="receipt-header">
-                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" class="company-logo"/>
-                            <div class="company-info">
-                                <div t-field="o.company_id.name"/>
-                                <div t-field="o.company_id.street"/>
-                                <div t-field="o.company_id.street2"/>
-                                <div>
-                                    <span t-field="o.company_id.city"/>
-                                    <span t-field="o.company_id.state_id"/>
-                                    <span t-field="o.company_id.zip"/>
-                                </div>
+                            </div>
+                            <div class="col-6 text-right">
+                                <strong>Payment</strong>
+                                <p style="margin-top: 5px;">
+                                    <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </p>
                             </div>
                         </div>
-
-                        <div class="receipt-title">
-                            <span>SALES RECEIPT</span>
-                            <br/>
-                            <span t-field="o.name"/>
-                        </div>
-
-                        <div class="receipt-details">
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong>Date:</strong> <span t-field="o.date"/>
-                                    <br/>
-                                    <strong>Partner:</strong> <span t-field="o.partner_id.name"/>
-                                </div>
-                                <div class="col-6">
-                                    <strong>Reference:</strong> <span t-field="o.ref"/>
-                                    <br/>
-                                    <strong>Journal:</strong> <span t-field="o.journal_id.name"/>
-                                </div>
-                            </div>
-
-                            <table class="table table-sm mt-3">
-                                <thead>
-                                    <tr>
-                                        <th>Account</th>
-                                        <th>Label</th>
-                                        <th class="text-right">Debit</th>
-                                        <th class="text-right">Credit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <t t-foreach="o.line_ids" t-as="line">
-                                        <tr>
-                                            <td>
-                                                <span t-field="line.account_id.code"/> - 
-                                                <span t-field="line.account_id.name"/>
-                                            </td>
-                                            <td><span t-field="line.name"/></td>
-                                            <td class="text-right">
-                                                <span t-field="line.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                            </td>
-                                            <td class="text-right">
-                                                <span t-field="line.credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                            </td>
-                                        </tr>
+                    </div>
+                    <table class="table table-sm table-bordered" style="margin-top: 20px;">
+                        <tr>
+                            <th colspan="2" style="text-align: center;">DEBIT</th>
+                            <th colspan="2" style="text-align: center;">CREDIT</th>
+                        </tr>
+                        <tr>
+                            <th>Account No.</th>
+                            <th>Amount</th>
+                            <th>Account No.</th>
+                            <th>Amount</th>
+                        </tr>
+                        <t t-set="debit_lines" t-value="o.line_ids.filtered(lambda l: l.debit > 0)"/>
+                        <t t-set="credit_lines" t-value="o.line_ids.filtered(lambda l: l.credit > 0)"/>
+                        <t t-set="max_lines" t-value="max(len(debit_lines), len(credit_lines))"/>
+                        <t t-foreach="range(max_lines)" t-as="i">
+                            <tr>
+                                <!-- Debit Side -->
+                                <td>
+                                    <t t-if="i &lt; len(debit_lines)">
+                                        <span t-field="debit_lines[i].account_id.code"/>
                                     </t>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2"><strong>Total</strong></td>
-                                        <td class="text-right">
-                                            <strong t-esc="sum(o.line_ids.mapped('debit'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                        </td>
-                                        <td class="text-right">
-                                            <strong t-esc="sum(o.line_ids.mapped('credit'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                </td>
+                                <td>
+                                    <t t-if="i &lt; len(debit_lines)">
+                                        <span t-field="debit_lines[i].debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </t>
+                                </td>
+                                <!-- Credit Side -->
+                                <td>
+                                    <t t-if="i &lt; len(credit_lines)">
+                                        <span t-field="credit_lines[i].account_id.code"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="i &lt; len(credit_lines)">
+                                        <span t-field="credit_lines[i].credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                    <div class="row" style="margin-top: 50px;">
+                        <div class="col-6" style="text-align: center;">
+                            <p>Received</p>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>_________________</p>
                         </div>
-
-                        <div class="receipt-footer">
-                            <div class="signature-section">
-                                <div class="signature-box">
-                                    <div>Prepared by</div>
-                                    <div class="signature-line"/>
-                                </div>
-                                <div class="signature-box">
-                                    <div>Checked by</div>
-                                    <div class="signature-line"/>
-                                </div>
-                                <div class="signature-box">
-                                    <div>Approved by</div>
-                                    <div class="signature-line"/>
-                                </div>
-                            </div>
+                        <div class="col-6" style="text-align: center;">
+                            <p>Approved</p>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p>_________________</p>
                         </div>
                     </div>
-                </t>
+                </div>
             </t>
         </t>
     </template>
