@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TaxInvoiceBulk xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TIN>0749004115603000</TIN>
+  <ListOfTaxInvoice>
+    <TaxInvoice>
+      <TaxInvoiceDate>2025-01-04</TaxInvoiceDate>
+      <TaxInvoiceOpt>Normal</TaxInvoiceOpt>
+      <TrxCode>'04</TrxCode>
+      <AddInfo/>
+      <CustomDoc/>
+      <RefDesc>B-A00-2501-0011</RefDesc>
+      <FacilityStamp/>
+      <SellerIDTKU>0749004115603000000000</SellerIDTKU>
+      <BuyerTin>'0639383785615000</BuyerTin>
+      <BuyerDocument>TIN</BuyerDocument>
+      <BuyerCountry>IDN</BuyerCountry>
+      <BuyerDocumentNumber>-</BuyerDocumentNumber>
+      <BuyerAdress>KUTISARI INDAH BARAT 4 NO.38 RT.004 RW. KUTISARI, TENGGILIS MEJOYO KOTA SURABAYA JAWA TIMUR</BuyerAdress>
+      <BuyerEmail/>
+      <BuyerIDTKU>'0639383785615000000000</BuyerIDTKU>
+      <ListOfGoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+  </Code>
+          <Name>GATE VALVE PERUNO 1</Name>
+          <Unit>UM.0019</Unit>
+          <Price>647297.3</Price>
+          <Qty>4</Qty>
+          <TotalDiscount>712027.03</TotalDiscount>
+          <TaxBase>1877162.16</TaxBase>
+          <OtherTaxBase>1720731.98</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>206487.84</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>V. SOCKET 1 TS @ 175 PCS RUCIKA</Name>
+          <Unit>UM.0021</Unit>
+          <Price>2882.88</Price>
+          <Qty>68</Qty>
+          <TotalDiscount>40299.13</TotalDiscount>
+          <TaxBase>155736.91</TaxBase>
+          <OtherTaxBase>142758.83</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>17131.06</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+      </ListOfGoodService>
+    </TaxInvoice>
+    <TaxInvoice>
+      <TaxInvoiceDate>2025-01-06</TaxInvoiceDate>
+      <TaxInvoiceOpt>Normal</TaxInvoiceOpt>
+      <TrxCode>'04</TrxCode>
+      <AddInfo/>
+      <CustomDoc/>
+      <RefDesc>B-A00-2501-0014</RefDesc>
+      <FacilityStamp/>
+      <SellerIDTKU>0749004115603000000000</SellerIDTKU>
+      <BuyerTin>'0639383785615000</BuyerTin>
+      <BuyerDocument>TIN</BuyerDocument>
+      <BuyerCountry>IDN</BuyerCountry>
+      <BuyerDocumentNumber>-</BuyerDocumentNumber>
+      <BuyerAdress>KUTISARI INDAH BARAT 4 NO.38 RT.004 RW. KUTISARI, TENGGILIS MEJOYO KOTA SURABAYA JAWA TIMUR</BuyerAdress>
+      <BuyerEmail/>
+      <BuyerIDTKU>'0639383785615000000000</BuyerIDTKU>
+      <ListOfGoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC  4 D + MOF  WINLON  PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>138990.99</Price>
+          <Qty>25</Qty>
+          <TotalDiscount>1169826.36</TotalDiscount>
+          <TaxBase>2304948.41</TaxBase>
+          <OtherTaxBase>2112869.38</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>253544.33</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC  3 D + MOF  WINLON  PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>85495.5</Price>
+          <Qty>2</Qty>
+          <TotalDiscount>57566.25</TotalDiscount>
+          <TaxBase>113424.74</TaxBase>
+          <OtherTaxBase>103972.68</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>12476.72</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC  21/2 D + MOF  WINLON  PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>68486.49</Price>
+          <Qty>15</Qty>
+          <TotalDiscount>345852.48</TotalDiscount>
+          <TaxBase>681444.82</TaxBase>
+          <OtherTaxBase>624657.75</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>74958.93</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>KNEE  4 DV @  25  LANGGENG</Name>
+          <Unit>UM.0021</Unit>
+          <Price>14576.58</Price>
+          <Qty>15</Qty>
+          <TotalDiscount>52475.68</TotalDiscount>
+          <TaxBase>166172.97</TaxBase>
+          <OtherTaxBase>152325.23</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>18279.03</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>TEE  4  DV  @  18  LANGGENG</Name>
+          <Unit>UM.0021</Unit>
+          <Price>20747.75</Price>
+          <Qty>15</Qty>
+          <TotalDiscount>74691.89</TotalDiscount>
+          <TaxBase>236524.32</TaxBase>
+          <OtherTaxBase>216813.96</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>26017.68</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>KNEE 21/2 DV @ 88 PCS LANGGENG</Name>
+          <Unit>UM.0021</Unit>
+          <Price>5648.65</Price>
+          <Qty>10</Qty>
+          <TotalDiscount>13556.76</TotalDiscount>
+          <TaxBase>42929.73</TaxBase>
+          <OtherTaxBase>39352.25</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>4722.27</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>TEE 21/2 DV @ 60 LANGGENG</Name>
+          <Unit>UM.0021</Unit>
+          <Price>7828.83</Price>
+          <Qty>10</Qty>
+          <TotalDiscount>18789.19</TotalDiscount>
+          <TaxBase>59499.1</TaxBase>
+          <OtherTaxBase>54540.84</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>6544.9</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+      </ListOfGoodService>
+    </TaxInvoice>
+    <TaxInvoice>
+      <TaxInvoiceDate>2025-01-08</TaxInvoiceDate>
+      <TaxInvoiceOpt>Normal</TaxInvoiceOpt>
+      <TrxCode>'04</TrxCode>
+      <AddInfo/>
+      <CustomDoc/>
+      <RefDesc>B-A00-2501-0023</RefDesc>
+      <FacilityStamp/>
+      <SellerIDTKU>0749004115603000000000</SellerIDTKU>
+      <BuyerTin>'0639383785615000</BuyerTin>
+      <BuyerDocument>TIN</BuyerDocument>
+      <BuyerCountry>IDN</BuyerCountry>
+      <BuyerDocumentNumber>-</BuyerDocumentNumber>
+      <BuyerAdress>KUTISARI INDAH BARAT 4 NO.38 RT.004 RW. KUTISARI, TENGGILIS MEJOYO KOTA SURABAYA JAWA TIMUR</BuyerAdress>
+      <BuyerEmail/>
+      <BuyerIDTKU>'0639383785615000000000</BuyerIDTKU>
+      <ListOfGoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC 4 AW RUCIKA PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>333603.6</Price>
+          <Qty>1</Qty>
+          <TotalDiscount>83302.49</TotalDiscount>
+          <TaxBase>250301.12</TaxBase>
+          <OtherTaxBase>229442.69</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>27533.12</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+      </ListOfGoodService>
+    </TaxInvoice>
+    <TaxInvoice>
+      <TaxInvoiceDate>2025-01-09</TaxInvoiceDate>
+      <TaxInvoiceOpt>Normal</TaxInvoiceOpt>
+      <TrxCode>'04</TrxCode>
+      <AddInfo/>
+      <CustomDoc/>
+      <RefDesc>B-A00-2501-0027</RefDesc>
+      <FacilityStamp/>
+      <SellerIDTKU>0749004115603000000000</SellerIDTKU>
+      <BuyerTin>'0639383785615000</BuyerTin>
+      <BuyerDocument>TIN</BuyerDocument>
+      <BuyerCountry>IDN</BuyerCountry>
+      <BuyerDocumentNumber>-</BuyerDocumentNumber>
+      <BuyerAdress>KUTISARI INDAH BARAT 4 NO.38 RT.004 RW. KUTISARI, TENGGILIS MEJOYO KOTA SURABAYA JAWA TIMUR</BuyerAdress>
+      <BuyerEmail/>
+      <BuyerIDTKU>'0639383785615000000000</BuyerIDTKU>
+      <ListOfGoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC 3 D  RUCIKA PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>109009.01</Price>
+          <Qty>3</Qty>
+          <TotalDiscount>81660.28</TotalDiscount>
+          <TaxBase>245366.75</TaxBase>
+          <OtherTaxBase>224919.52</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>26990.34</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>KNIE 3 DV @ 30 RUCIKA</Name>
+          <Unit>UM.0021</Unit>
+          <Price>14684.68</Price>
+          <Qty>15</Qty>
+          <TotalDiscount>45280.95</TotalDiscount>
+          <TaxBase>174989.32</TaxBase>
+          <OtherTaxBase>160406.87</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>19248.82</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+      </ListOfGoodService>
+    </TaxInvoice>
+    <TaxInvoice>
+      <TaxInvoiceDate>2025-01-09</TaxInvoiceDate>
+      <TaxInvoiceOpt>Normal</TaxInvoiceOpt>
+      <TrxCode>'04</TrxCode>
+      <AddInfo/>
+      <CustomDoc/>
+      <RefDesc>B-A00-2501-0028</RefDesc>
+      <FacilityStamp/>
+      <SellerIDTKU>0749004115603000000000</SellerIDTKU>
+      <BuyerTin>'0639383785615000</BuyerTin>
+      <BuyerDocument>TIN</BuyerDocument>
+      <BuyerCountry>IDN</BuyerCountry>
+      <BuyerDocumentNumber>-</BuyerDocumentNumber>
+      <BuyerAdress>KUTISARI INDAH BARAT 4 NO.38 RT.004 RW. KUTISARI, TENGGILIS MEJOYO KOTA SURABAYA JAWA TIMUR</BuyerAdress>
+      <BuyerEmail/>
+      <BuyerIDTKU>'0639383785615000000000</BuyerIDTKU>
+      <ListOfGoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC 6 D  RUCIKA PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>347927.93</Price>
+          <Qty>2</Qty>
+          <TotalDiscount>173758.68</TotalDiscount>
+          <TaxBase>522097.17</TaxBase>
+          <OtherTaxBase>478589.07</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>57430.69</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>PVC 1 1/4  D  RUCIKA PUTIH</Name>
+          <Unit>UM.0021</Unit>
+          <Price>41981.98</Price>
+          <Qty>2</Qty>
+          <TotalDiscount>20966.23</TotalDiscount>
+          <TaxBase>62997.74</TaxBase>
+          <OtherTaxBase>57747.93</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>6929.75</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>KNIE 4 DV @ 15 RUCIKA</Name>
+          <Unit>UM.0021</Unit>
+          <Price>29099.1</Price>
+          <Qty>4</Qty>
+          <TotalDiscount>23927.6</TotalDiscount>
+          <TaxBase>92468.79</TaxBase>
+          <OtherTaxBase>84763.06</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>10171.57</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+        <GoodService>
+          <Opt>A</Opt>
+          <Code>
+</Code>
+          <Name>TEE 4 DV @ 8 RUCIKA</Name>
+          <Unit>UM.0021</Unit>
+          <Price>38288.29</Price>
+          <Qty>1</Qty>
+          <TotalDiscount>7870.92</TotalDiscount>
+          <TaxBase>30417.37</TaxBase>
+          <OtherTaxBase>27882.59</OtherTaxBase>
+          <VATRate>12</VATRate>
+          <VAT>3345.91</VAT>
+          <STLGRate>0</STLGRate>
+          <STLG>0</STLG>
+        </GoodService>
+      </ListOfGoodService>
+    </TaxInvoice>
+  </ListOfTaxInvoice>
+</TaxInvoiceBulk>
