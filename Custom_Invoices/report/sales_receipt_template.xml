@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-size: 12px;">
+                    <!-- Header Section -->
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="/web/binary/company_logo" style="max-height: 80px;" alt="Logo"/>
+                        </div>
+                        <div class="col-6 text-right">
+                            <h1 style="color: #2B8C67;">INVOICE</h1>
+                        </div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="row mt-3">
+                        <!-- Invoice Info - Left Side -->
+                        <div class="col-6">
+                            <table class="table table-sm table-borderless" style="width: 80%;">
+                                <tr>
+                                    <td style="width: 30%;">DATE</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td><span t-field="o.invoice_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td>INVOICE #</td>
+                                    <td>:</td>
+                                    <td><span t-field="o.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td>DUE DATE</td>
+                                    <td>:</td>
+                                    <td><span t-field="o.invoice_date_due"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- Company Info - Right Side -->
+                        <div class="col-6 text-right">
+                            <strong><span t-field="o.company_id.name"/></strong><br/>
+                            <span t-field="o.company_id.street"/><br/>
+                            <span t-field="o.company_id.street2"/><br/>
+                            <span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/>
+                        </div>
+                    </div>
+
+                    <!-- Bill To Section -->
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <table class="table table-sm" style="width: 80%;">
+                                <thead style="background-color: #E6E6FA;">
+                                    <tr>
+                                        <th>BILL TO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span t-field="o.partner_id.name"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Lines -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Description</th>
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-right">Price</th>
+                                        <th class="text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="line_number" t-value="1"/>
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="line_number"/></td>
+                                            <td><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                            <td class="text-center">1</td>
+                                            <td class="text-right">
+                                                <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="line_number" t-value="line_number + 1"/>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td class="text-right">
+                                        <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PPH 23</td>
+                                    <td class="text-right">
+                                        <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>TOTAL</strong></td>
+                                    <td class="text-right">
+                                        <strong><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Payment Info -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <strong>PAYMENT INFORMATION:</strong><br/>
+                            <t t-foreach="o.company_id.bank_ids" t-as="bank">
+                                <span>BANK NAME : </span><span t-field="bank.bank_id.name"/><br/>
+                                <span>ACCOUNT NO. : </span><span t-field="bank.acc_number"/><br/>
+                                <span>BENEFICIARY NAME : </span><span t-field="bank.acc_holder_name"/>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Signature -->
+                    <div class="row mt-4">
+                        <div class="col-8"></div>
+                        <div class="col-4 text-center">
+                            <p>Regards,</p>
+                            <br/><br/><br/>
+                            <p>PU HENG HONG</p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo> 
