@@ -6,3 +6,6 @@ Completed Porject:
 - delete reffrence code from priview in accounting feature
 - custom quitation report
 - Custom chasier report 
+- Custom Journal entries
+- Bukti kas kecil keluar
+- Bukti bank keluar
