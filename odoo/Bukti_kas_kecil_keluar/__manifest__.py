@@ -1,10 +1,10 @@
 {
-    'name': 'Custom Sales Receipt',
-    'version': '1.2.0',
+    'name': 'Bukti Kas Kecil',
+    'version': '1.0',
     'author': 'Mahendra',
     'category': 'Accounting',
-    'summary': 'Custom Sales Receipt Format for Enterprise',
-    'description': """Custom Sales Receipt with specific format""",
+    'summary': 'Bukti Kas Kecil Format for Enterprise',
+    'description': """Bukti Kas Kecil with specific format""",
     'depends': [
         'account',
         'account_accountant',
