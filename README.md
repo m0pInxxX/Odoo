@@ -9,4 +9,5 @@ Completed Porject:
 - Custom Journal entries
 - Bukti kas kecil keluar
 - Bukti bank keluar
+- Custom Invoice Report
 - Website
