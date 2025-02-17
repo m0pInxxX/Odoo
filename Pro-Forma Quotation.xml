@@ -98,13 +98,7 @@
               <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
                 <t t-if="not line.display_type">
                   <td name="td_name">
-                    <span t-field="line.name"/>
-                    <div t-if="line.product_id.description" style="font-size: 0.9em; color: #666;">
-                        <t t-esc="line.product_id.description"/>
-                    </div>
-                    <div t-if="line.x_studio_specifications" style="font-size: 0.9em; color: #666;">
-                        <t t-esc="line.x_studio_specifications"/>
-                    </div>
+                    <span t-field="line.name">Bacon Burger</span>
                   </td>
                   <td name="td_quantity" class="text-end">
                     <span t-field="line.product_uom_qty">3</span>
@@ -134,11 +128,9 @@
                 
                 </t>
                 <t t-elif="line.display_type == 'line_note'">
-                    <span t-if="(env.context.get('proforma', False) or is_pro_forma) and doc.state in ['draft', 'sent']">
-                  <td name="td_note_line" colspan="99">
-                    <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
-                  </td>
-                  </span>
+                    <td name="td_note_line" colspan="99">
+                        <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                    </td>
                 </t>
               </tr>
               <t t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section') and not line.is_downpayment">
