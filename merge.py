@@ -49,7 +49,7 @@ def merge_excel_files(input_folder, output_file):
         print("Tidak ada file Excel yang ditemukan di folder")
 
 if __name__ == "__main__":
-    input_folder = r"D:\Coretax\04-22-1-2025"
-    output_file = "D:/Coretax/04-22-1-2025/04-24-1-2025.xlsx"
+    input_folder = r"D:\Coretax Chandra\04-9-1-2025"
+    output_file = "D:/Coretax Chandra/04-9-1-2025/04-9-1-2025.xlsx"
     
     merge_excel_files(input_folder, output_file)

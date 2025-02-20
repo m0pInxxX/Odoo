@@ -1,15 +1,11 @@
-<t t-name="sale.report_saleorder_document_copy_7">
-    <t t-call="web.external_layout">
-      <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
-      <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat"/>
-      <t t-set="address">
+<data><xpath expr="/t[@t-name='sale.report_saleorder_document_copy_4']" position="replace" mode="inner"><t t-call="web.external_layout">
+      <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/><t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat"/><t t-set="address">
         <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
         <p t-if="doc.partner_id.vat">
           <t t-if="doc.company_id.account_fiscal_country_id.vat_label" t-out="doc.company_id.account_fiscal_country_id.vat_label"/>
           <t t-else="">Tax ID</t>: <span t-field="doc.partner_id.vat"/>
         </p>
-      </t>
-      <t t-if="doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id">
+      </t><t t-if="doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id">
         <t t-set="information_block">
           <strong>
             <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
@@ -25,12 +21,11 @@
             <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
           </t>
         </t>
-      </t>
-      <div class="page">
+      </t><div class="page">
         <div class="oe_structure"/>
         <h2 class="mt-4">
-          <span t-if="doc.state in ['draft','sent']">Quotation # </span>
-          <span t-elif="env.context.get('proforma', False) or is_pro_forma">Pro-Forma Invoice # </span>
+          <span t-if="env.context.get('proforma', False) or is_pro_forma">Pro-Forma Invoice # </span>
+          <span t-elif="doc.state in ['draft','sent']">Quotation # </span>
           <span t-else="">Order # </span>
           <span t-field="doc.name">SO0000</span>
         </h2>
@@ -44,7 +39,6 @@
             <strong t-if="doc.state in ['draft', 'sent']">Quotation Date:</strong>
             <strong t-else="">Order Date:</strong>
             <br/>
-            <!--<span class="m-0" t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}">2023-12-31</span>-->
             <span class="m-0" t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MMM-yyyy&quot;}">2023-12-31</span>
           </div>
           <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col-auto col-3 mw-100 mb-2" name="expiration_date">
@@ -98,13 +92,7 @@
               <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
                 <t t-if="not line.display_type">
                   <td name="td_name">
-                    <span t-field="line.name"/>
-                    <div t-if="line.product_id.description" style="font-size: 0.9em; color: #666;">
-                        <t t-esc="line.product_id.description"/>
-                    </div>
-                    <div t-if="line.x_studio_specifications" style="font-size: 0.9em; color: #666;">
-                        <t t-esc="line.x_studio_specifications"/>
-                    </div>
+                    <span t-field="line.name">Bacon Burger</span>
                   </td>
                   <td name="td_quantity" class="text-end">
                     <span t-field="line.product_uom_qty">3</span>
@@ -117,28 +105,24 @@
                     <span t-field="line.discount">-</span>
                   </td>
                   <td name="td_taxes" class="text-end">
-                    <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))">Tax 15%</span>
+                    <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))">
+                                        Tax 15%
+                                    </span>
                   </td>
                   <td t-if="not line.is_downpayment" name="td_subtotal" class="text-end o_price_total">
                     <span t-field="line.price_subtotal">27.00</span>
                   </td>
                 </t>
-                
                 <t t-elif="line.display_type == 'line_section'">
-                    
-                  <td name="td_section_line" colspan="99">
-                    <span t-field="line.name">A section title</span>
-                  </td>
-                  <t t-set="current_section" t-value="line"/>
-                  <t t-set="current_subtotal" t-value="0"/>
-                
-                </t>
+                    <td name="td_section_line" colspan="99">
+                        <span t-field="line.name">A section title</span>
+                    </td>
+                <t t-set="current_section" t-value="line"/>
+                <t t-set="current_subtotal" t-value="0"/></t>
                 <t t-elif="line.display_type == 'line_note'">
-                    <span t-if="(env.context.get('proforma', False) or is_pro_forma) and doc.state in ['draft', 'sent']">
-                  <td name="td_note_line" colspan="99">
-                    <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
-                  </td>
-                  </span>
+                    <td name="td_note_line" colspan="99">
+                        <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                    </td>
                 </t>
               </tr>
               <t t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section') and not line.is_downpayment">
@@ -149,16 +133,29 @@
                   </td>
                 </tr>
               </t>
-              
             </t>
           </tbody>
         </table>
         <div class="clearfix" name="so_total_summary">
-          <div id="total" class="row" name="total">
-            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
-              <table class="table table-sm table-borderless">
+    <div id="total" class="row" name="total">
+        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+            <table class="table table-sm table-borderless">
                 <t t-set="tax_totals" t-value="doc.tax_totals"/>
-                <t t-call="sale.document_tax_totals_copy_8"/>
+                <t t-call="sale.document_tax_totals_copy_5"/>
+                <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                    <t t-set="pi_percentage" t-value="doc.x_studio_pi_2 or 0"/>
+                    <t t-set="percentage_amount" t-value="doc.amount_total * pi_percentage"/>
+                    <tr>
+                        <td>
+                            <strong>Termin 2 :  
+                                <span t-out="pi_percentage*100"/>%
+                                </strong>
+                        </td>
+                        <td class="text-end">
+                            <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="percentage_amount"/>
+                        </td>
+                    </tr>
+                </t>
               </table>
             </div>
           </div>
@@ -171,31 +168,37 @@
                 <span t-field="doc.company_id.x_studio_text_field_8at_1hris698d"/>
             </div>
             <div class="col-4">
-                <span t-if="doc.state not in ['draft', 'sent']">
-                <table width="100%">
-                    <tr>
-                        <th width="50%"><u><span>DELTA PERSADA SOLUSI, PT</span></u><br/><br/><br/><br/><br/><br/><br/><br/>Finance</th>
-                    </tr>
-                </table>
-                
+                <span t-if="env.context.get('proforma', False) or is_pro_forma">
+                    <table class="table table-borderless" style="margin-bottom: 0;">
+                        <tbody><tr>
+                            <td class="text-center">
+                                <u><span>DELTA PERSADA SOLUSI, PT</span></u>
+                                <div style="height: 80px;"/>
+                                <span>Finance</span>
+                            </td>
+                        </tr>
+                    </tbody></table>
                 </span>
             </div>
-
         </div>
-        <div class="oe_structure"/>
-        <div t-if="doc.state not in ['draft', 'sent']">
-            <div t-if="not doc.signature" class="oe_structure"/>
-            <div t-else="" class="mt-4 ml64 mr4" name="signature">
-                <div class="offset-8">
-                    <strong>Signature</strong>
-                </div>
-                <div class="offset-8">
-                    <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
-                </div>
-                <div class="offset-8 text-center">
-                    <span t-field="doc.signed_by">Oscar Morgan</span>
-                </div>
+
+        <div class="footer o_standard_footer">
+            <div class="text-center" style="font-size: 10px;">
+                
+                <div style="margin-bottom: 3px;"><br/></div>
             </div>
+        </div>
+        <div t-if="not doc.signature" class="oe_structure"/>
+        <div t-else="" class="mt-4 ml64 mr4" name="signature">
+          <div class="offset-8">
+            <strong>Signature</strong>
+          </div>
+          <div class="offset-8">
+            <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+          </div>
+          <div class="offset-8 text-center">
+            <span t-field="doc.signed_by">Oscar Morgan</span>
+          </div>
         </div>
         <div t-if="not (doc.sale_order_option_ids and doc.state in ['draft', 'sent'])" class="oe_structure">​</div>
         <div t-else="">
@@ -244,6 +247,5 @@
             <span t-field="doc.fiscal_position_id.sudo().note">No further requirements for this payment</span>
           </p>
         </div>
-      </div>
-    </t>
-  </t>
+      </div></t>
+  </xpath></data>
