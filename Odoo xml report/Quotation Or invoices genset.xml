@@ -1,4 +1,5 @@
-<t t-name="sale.report_saleorder_document_copy_7">
+<data>
+  <xpath expr="/t[@t-name='sale.report_saleorder_document']" position="replace" mode="inner">
     <t t-call="web.external_layout">
       <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
       <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat"/>
@@ -29,9 +30,12 @@
       <div class="page">
         <div class="oe_structure"/>
         <h2 class="mt-4">
-          <span t-if="doc.state in ['draft','sent']">Quotation # </span>
-          <span t-elif="env.context.get('proforma', False) or is_pro_forma">Pro-Forma Invoice # </span>
-          <span t-else="">Order # </span>
+          <t t-if="doc._name == 'sale.order' and doc.state in ['draft','sent']">
+            <span>Quotation #</span>
+          </t>
+          <t t-elif="doc._name == 'sale.order'">
+            <span>Pro-Forma Invoice #</span>
+          </t>
           <span t-field="doc.name">SO0000</span>
         </h2>
         <div class="row mt-4 mb-2" id="informations">
@@ -111,7 +115,9 @@
                     <span t-field="line.discount">-</span>
                   </td>
                   <td name="td_taxes" class="text-end">
-                    <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))">Tax 15%</span>
+                    <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))">
+                                        Tax 15%
+                                    </span>
                   </td>
                   <td t-if="not line.is_downpayment" name="td_subtotal" class="text-end o_price_total">
                     <span t-field="line.price_subtotal">27.00</span>
@@ -129,7 +135,17 @@
                 </t>
                 <t t-elif="line.display_type == 'line_note'">
                     <td name="td_note_line" colspan="99">
-                        <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                        <t t-if="line.name">
+                            <t t-set="stop_printing" t-value="False"/>
+                            <t t-foreach="line.name.split('\n')" t-as="note_line">
+                                <t t-if="'Kondisi Harga:' in note_line">
+                                    <t t-set="stop_printing" t-value="True"/>
+                                </t>
+                                <t t-if="not stop_printing">
+                                    <span t-esc="note_line"/><br/>
+                                </t>
+                            </t>
+                        </t>
                     </td>
                 </t>
               </tr>
@@ -150,7 +166,7 @@
             <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
               <table class="table table-sm table-borderless">
                 <t t-set="tax_totals" t-value="doc.tax_totals"/>
-                <t t-call="sale.document_tax_totals_copy_8"/>
+                <t t-call="sale.document_tax_totals"/>
               </table>
             </div>
           </div>
@@ -163,7 +179,8 @@
                 <span t-field="doc.company_id.x_studio_text_field_8at_1hris698d"/>
             </div>
             <div class="col-4">
-                <span t-if="doc.state not in ['draft', 'sent']">
+               
+                <span t-if="env.context.get('proforma', False) or is_pro_forma">
                 <table width="100%">
                     <tr>
                         <th width="50%"><u><span>DELTA PERSADA SOLUSI, PT</span></u><br/><br/><br/><br/><br/><br/><br/><br/>Finance</th>
@@ -175,19 +192,17 @@
 
         </div>
         <div class="oe_structure"/>
-        <div t-if="doc.state not in ['draft', 'sent']">
-            <div t-if="not doc.signature" class="oe_structure"/>
-            <div t-else="" class="mt-4 ml64 mr4" name="signature">
-                <div class="offset-8">
-                    <strong>Signature</strong>
-                </div>
-                <div class="offset-8">
-                    <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
-                </div>
-                <div class="offset-8 text-center">
-                    <span t-field="doc.signed_by">Oscar Morgan</span>
-                </div>
-            </div>
+        <div t-if="not doc.signature" class="oe_structure"/>
+        <div t-else="" class="mt-4 ml64 mr4" name="signature">
+          <div class="offset-8">
+            <strong>Signature</strong>
+          </div>
+          <div class="offset-8">
+            <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+          </div>
+          <div class="offset-8 text-center">
+            <span t-field="doc.signed_by">Oscar Morgan</span>
+          </div>
         </div>
         <div t-if="not (doc.sale_order_option_ids and doc.state in ['draft', 'sent'])" class="oe_structure">​</div>
         <div t-else="">
@@ -238,4 +253,5 @@
         </div>
       </div>
     </t>
-  </t>
+  </xpath>
+</data>
