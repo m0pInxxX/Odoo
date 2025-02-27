@@ -1,4 +1,4 @@
-**All my project was for odoo enterprise and autocount, and account was mine**
+**This is for list what have i do but not all, just some code i just wanna share just in case you or i need it**
 
 Odoo Custom Module:
 - Hide used product from product page
