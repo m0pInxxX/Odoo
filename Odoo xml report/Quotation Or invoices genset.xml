@@ -179,17 +179,12 @@
                 <span t-field="doc.company_id.x_studio_text_field_8at_1hris698d"/>
             </div>
             <div class="col-4">
-               
-                <span t-if="env.context.get('proforma', False) or is_pro_forma">
                 <table width="100%">
                     <tr>
                         <th width="50%"><u><span>DELTA PERSADA SOLUSI, PT</span></u><br/><br/><br/><br/><br/><br/><br/><br/>Finance</th>
                     </tr>
                 </table>
-                
-                </span>
             </div>
-
         </div>
         <div class="oe_structure"/>
         <div t-if="not doc.signature" class="oe_structure"/>
