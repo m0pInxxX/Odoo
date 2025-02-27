@@ -18,5 +18,5 @@ Some Tools i mak e:
 
 Some AutoCount Code
 
-Profile Company website that i made with @arengganabakta
+Profile Company website that i made with @rengganabakta
 https://deploy-website-coral.vercel.app
