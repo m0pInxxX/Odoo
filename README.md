@@ -11,7 +11,7 @@ Odoo Custom Module:
 - Custom Invoice Report
 
 
-Some Tools i mak e:
+Some Tools i make:
 - converter Json to excel xlsx
 - Merger excel xlsx
 - Spliter data to few different file
