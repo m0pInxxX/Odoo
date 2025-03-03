@@ -81,13 +81,20 @@
                                     <t t-foreach="o.invoice_line_ids" t-as="line">
                                         <tr>
                                             <td><t t-esc="line_number"/></td>
-                                            <td><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-right">
-                                                <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            <td>
+                                                <span t-field="line.name"/>
+                                                <t t-if="line.name and '/' not in line.name">
+                                                    /<span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                                </t>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="line.quantity"/>
                                             </td>
                                             <td class="text-right">
-                                                <span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                <span t-field="line.price_unit"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="line.price_subtotal"/>
                                             </td>
                                         </tr>
                                         <t t-set="line_number" t-value="line_number + 1"/>
@@ -105,19 +112,19 @@
                                 <tr>
                                     <td>Subtotal</td>
                                     <td class="text-right">
-                                        <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        <span t-field="o.amount_untaxed"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>PPH 23</td>
                                     <td class="text-right">
-                                        <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        <span t-field="o.amount_tax"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>TOTAL</strong></td>
                                     <td class="text-right">
-                                        <strong><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                                        <strong><span t-field="o.amount_total"/></strong>
                                     </td>
                                 </tr>
                             </table>
