@@ -1,3 +1,4 @@
 *.zip
+*.xlsx
 
 /tools/json_file
