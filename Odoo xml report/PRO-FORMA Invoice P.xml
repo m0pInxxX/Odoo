@@ -121,7 +121,17 @@
                 <t t-set="current_subtotal" t-value="0"/></t>
                 <t t-elif="line.display_type == 'line_note'">
                     <td name="td_note_line" colspan="99">
-                        <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                        <t t-if="line.name">
+                            <t t-set="stop_printing" t-value="False"/>
+                            <t t-foreach="line.name.split('\n')" t-as="note_line">
+                                <t t-if="'Kondisi Harga:' in note_line">
+                                    <t t-set="stop_printing" t-value="True"/>
+                                </t>
+                                <t t-if="not stop_printing">
+                                    <span t-esc="note_line"/><br/>
+                                </t>
+                            </t>
+                        </t>
                     </td>
                 </t>
               </tr>
@@ -143,20 +153,41 @@
                 <t t-set="tax_totals" t-value="doc.tax_totals"/>
                 <t t-call="sale.document_tax_totals_copy_5"/>
                 <t t-if="env.context.get('proforma', False) or is_pro_forma">
-                    <t t-set="pi_percentage" t-value="doc.x_studio_pi_2 or 0"/>
-                    <t t-set="percentage_amount" t-value="doc.amount_total * pi_percentage"/>
-                    <tr>
-                        <td>
-                            <strong>Termin 2 :  
-                                <span t-out="pi_percentage*100"/>%
-                                </strong>
-                        </td>
-                        <td class="text-end">
-                            <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="percentage_amount"/>
-                        </td>
-                    </tr>
+                    <!-- Check Termin 1 -->
+                    <t t-if="doc.x_studio_pi_1 and doc.x_studio_pi_1 != 0">
+                        <tr>
+                            <td>
+                                <strong>P1 : <span t-out="doc.x_studio_pi_1*100"/>%</strong>
+                            </td>
+                            <td class="text-end">
+                                <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="doc.amount_total * doc.x_studio_pi_1"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <!-- Check Termin 2 -->
+                    <t t-if="doc.x_studio_pi_2 and doc.x_studio_pi_2 != 0">
+                        <tr>
+                            <td>
+                                <strong>P2 : <span t-out="doc.x_studio_pi_2*100"/>%</strong>
+                            </td>
+                            <td class="text-end">
+                                <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="doc.amount_total * doc.x_studio_pi_2"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <!-- Check Termin 3 -->
+                    <t t-if="doc.x_studio_pi_3 and doc.x_studio_pi_3 != 0">
+                        <tr>
+                            <td>
+                                <strong>P3 : <span t-out="doc.x_studio_pi_3*100"/>%</strong>
+                            </td>
+                            <td class="text-end">
+                                <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="doc.amount_total * doc.x_studio_pi_3"/>
+                            </td>
+                        </tr>
+                    </t>
                 </t>
-              </table>
+            </table>
             </div>
           </div>
         </div>

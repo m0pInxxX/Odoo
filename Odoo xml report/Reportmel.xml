@@ -1,11 +1,16 @@
-<data><xpath expr="/t[@t-name='sale.report_saleorder_document_copy_4']" position="replace" mode="inner"><t t-call="web.external_layout">
-      <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/><t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat"/><t t-set="address">
+﻿<data>
+  <xpath expr="/t[@t-name='sale.report_saleorder_document']" position="replace" mode="inner">
+    <t t-call="web.external_layout">
+      <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+      <t t-set="forced_vat" t-value="doc.fiscal_position_id.foreign_vat"/>
+      <t t-set="address">
         <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
         <p t-if="doc.partner_id.vat">
           <t t-if="doc.company_id.account_fiscal_country_id.vat_label" t-out="doc.company_id.account_fiscal_country_id.vat_label"/>
           <t t-else="">Tax ID</t>: <span t-field="doc.partner_id.vat"/>
         </p>
-      </t><t t-if="doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id">
+      </t>
+      <t t-if="doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id">
         <t t-set="information_block">
           <strong>
             <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
@@ -21,12 +26,16 @@
             <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
           </t>
         </t>
-      </t><div class="page">
+      </t>
+      <div class="page">
         <div class="oe_structure"/>
         <h2 class="mt-4">
-          <span t-if="env.context.get('proforma', False) or is_pro_forma">Pro-Forma Invoice # </span>
-          <span t-elif="doc.state in ['draft','sent']">Quotation # </span>
-          <span t-else="">Order # </span>
+          <t t-if="doc._name == 'sale.order' and doc.state in ['draft','sent']">
+            <span>Quotation #</span>
+          </t>
+          <t t-elif="doc._name == 'sale.order'">
+            <span>Pro-Forma Invoice #</span>
+          </t>
           <span t-field="doc.name">SO0000</span>
         </h2>
         <div class="row mt-4 mb-2" id="informations">
@@ -39,6 +48,7 @@
             <strong t-if="doc.state in ['draft', 'sent']">Quotation Date:</strong>
             <strong t-else="">Order Date:</strong>
             <br/>
+            <!--<span class="m-0" t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}">2023-12-31</span>-->
             <span class="m-0" t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MMM-yyyy&quot;}">2023-12-31</span>
           </div>
           <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col-auto col-3 mw-100 mb-2" name="expiration_date">
@@ -113,27 +123,22 @@
                     <span t-field="line.price_subtotal">27.00</span>
                   </td>
                 </t>
+                
                 <t t-elif="line.display_type == 'line_section'">
-                    <td name="td_section_line" colspan="99">
-                        <span t-field="line.name">A section title</span>
-                    </td>
-                <t t-set="current_section" t-value="line"/>
-                <t t-set="current_subtotal" t-value="0"/></t>
+                    
+                  <td name="td_section_line" colspan="99">
+                    <span t-field="line.name">A section title</span>
+                  </td>
+                  <t t-set="current_section" t-value="line"/>
+                  <t t-set="current_subtotal" t-value="0"/>
+                
+                </t>
                 <t t-elif="line.display_type == 'line_note'">
+                  <tr t-if="doc._name == 'sale.order'">
                     <td name="td_note_line" colspan="99">
-                        <t t-if="line.name">
-                            <t t-set="lines" t-value="line.name.split('\n')"/>
-                            <t t-set="stop_printing" t-value="False"/>
-                            <t t-foreach="lines" t-as="note_line">
-                                <t t-if="'Kondisi Harga' in note_line">
-                                    <t t-set="stop_printing" t-value="True"/>
-                                </t>
-                                <t t-if="not stop_printing">
-                                    <span t-esc="note_line"/><br/>
-                                </t>
-                            </t>
-                        </t>
+                      <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
                     </td>
+                  </tr>
                 </t>
               </tr>
               <t t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section') and not line.is_downpayment">
@@ -144,51 +149,17 @@
                   </td>
                 </tr>
               </t>
+              
             </t>
           </tbody>
         </table>
         <div class="clearfix" name="so_total_summary">
-    <div id="total" class="row" name="total">
-        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
-            <table class="table table-sm table-borderless">
+          <div id="total" class="row" name="total">
+            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+              <table class="table table-sm table-borderless">
                 <t t-set="tax_totals" t-value="doc.tax_totals"/>
-                <t t-call="sale.document_tax_totals_copy_5"/>
-                <t t-if="env.context.get('proforma', False) or is_pro_forma">
-                    <!-- Check Termin 1 -->
-                    <t t-if="doc.x_studio_pi_1 and doc.x_studio_pi_1 != 0">
-                        <tr>
-                            <td>
-                                <strong>P1 : <span t-out="doc.x_studio_pi_1*100"/>%</strong>
-                            </td>
-                            <td class="text-end">
-                                <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="doc.amount_total * doc.x_studio_pi_1"/>
-                            </td>
-                        </tr>
-                    </t>
-                    <!-- Check Termin 2 -->
-                    <t t-if="doc.x_studio_pi_2 and doc.x_studio_pi_2 != 0">
-                        <tr>
-                            <td>
-                                <strong>P2 : <span t-out="doc.x_studio_pi_2*100"/>%</strong>
-                            </td>
-                            <td class="text-end">
-                                <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="doc.amount_total * doc.x_studio_pi_2"/>
-                            </td>
-                        </tr>
-                    </t>
-                    <!-- Check Termin 3 -->
-                    <t t-if="doc.x_studio_pi_3 and doc.x_studio_pi_3 != 0">
-                        <tr>
-                            <td>
-                                <strong>P3 : <span t-out="doc.x_studio_pi_3*100"/>%</strong>
-                            </td>
-                            <td class="text-end">
-                                <span t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" t-out="doc.amount_total * doc.x_studio_pi_3"/>
-                            </td>
-                        </tr>
-                    </t>
-                </t>
-            </table>
+                <t t-call="sale.document_tax_totals"/>
+              </table>
             </div>
           </div>
         </div>
@@ -200,26 +171,19 @@
                 <span t-field="doc.company_id.x_studio_text_field_8at_1hris698d"/>
             </div>
             <div class="col-4">
+               
                 <span t-if="env.context.get('proforma', False) or is_pro_forma">
-                    <table class="table table-borderless" style="margin-bottom: 0;">
-                        <tbody><tr>
-                            <td class="text-center">
-                                <u><span>DELTA PERSADA SOLUSI, PT</span></u>
-                                <div style="height: 80px;"/>
-                                <span>Finance</span>
-                            </td>
-                        </tr>
-                    </tbody></table>
+                <table width="100%">
+                    <tr>
+                        <th width="50%"><u><span>DELTA PERSADA SOLUSI, PT</span></u><br/><br/><br/><br/><br/><br/><br/><br/>Finance</th>
+                    </tr>
+                </table>
+                
                 </span>
             </div>
-        </div>
 
-        <div class="footer o_standard_footer">
-            <div class="text-center" style="font-size: 10px;">
-                
-                <div style="margin-bottom: 3px;"><br/></div>
-            </div>
         </div>
+        <div class="oe_structure"/>
         <div t-if="not doc.signature" class="oe_structure"/>
         <div t-else="" class="mt-4 ml64 mr4" name="signature">
           <div class="offset-8">
@@ -279,5 +243,7 @@
             <span t-field="doc.fiscal_position_id.sudo().note">No further requirements for this payment</span>
           </p>
         </div>
-      </div></t>
-  </xpath></data>
+      </div>
+    </t>
+  </xpath>
+</data>

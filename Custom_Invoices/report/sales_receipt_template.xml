@@ -41,7 +41,8 @@
                             <strong><span t-field="o.company_id.name"/></strong><br/>
                             <span t-field="o.company_id.street"/><br/>
                             <span t-field="o.company_id.street2"/><br/>
-                            <span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/>
+                            <span t-field="o.company_id.city"/> <br/>
+                            <span t-field="o.company_id.state_id"/>
                         </div>
                     </div>
 
@@ -138,7 +139,7 @@
                             <t t-foreach="o.company_id.bank_ids" t-as="bank">
                                 <span>BANK NAME : </span><span t-field="bank.bank_id.name"/><br/>
                                 <span>ACCOUNT NO. : </span><span t-field="bank.acc_number"/><br/>
-                                <span>BENEFICIARY NAME : </span><span t-field="bank.acc_holder_name"/>
+                                <span>BENEFICIARY NAME : ALLIN INDONESIA T L PT</span><br/>
                             </t>
                         </div>
                     </div>
