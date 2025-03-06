@@ -41,10 +41,7 @@
                             <strong><span t-field="o.company_id.name"/></strong><br/>
                             <span t-field="o.company_id.street"/><br/>
                             <span t-field="o.company_id.street2"/><br/>
-                            <span t-field="o.company_id.city"/><br/>
                             <t t-if="o.company_id.vat">NPWP: <span t-field="o.company_id.vat"/><br/></t>
-                            <t t-if="o.company_id.company_registry">Company ID: <span t-field="o.company_id.company_registry"/><br/></t>
-                            <span t-field="o.company_id.state_id"/><br/>
                         </div>
                     </div>
 
@@ -112,22 +109,47 @@
                         <div class="col-8"></div>
                         <div class="col-4">
                             <table class="table table-sm">
+                                <!-- Subtotal -->
                                 <tr>
                                     <td>Subtotal</td>
                                     <td class="text-right">
                                         <span t-field="o.amount_untaxed"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>PPH 23</td>
-                                    <td class="text-right">
-                                        <span t-field="o.amount_tax"/>
-                                    </td>
-                                </tr>
+                                
+                                <!-- Regular Tax (PPN) -->
+                                <t t-foreach="o.line_ids.filtered(lambda l: l.tax_line_id and ('11' in l.tax_line_id.name))" t-as="tax_line">
+                                    <tr>
+                                        <td><span t-field="tax_line.tax_line_id.name"/></td>
+                                        <td class="text-right">
+                                            <span t-esc="abs(tax_line.balance)" 
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <!-- PPH Tax -->
+                                <t t-foreach="o.line_ids.filtered(lambda l: l.tax_line_id and ('PPH' in l.tax_line_id.name.upper() or 'pph' in l.tax_line_id.name.lower()))" t-as="tax_line">
+                                    <tr>
+                                        <td><span t-field="tax_line.tax_line_id.name"/></td>
+                                        <td class="text-right">
+                                            <span t-esc="abs(tax_line.balance)" 
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <!-- Total -->
                                 <tr>
                                     <td><strong>TOTAL</strong></td>
                                     <td class="text-right">
-                                        <strong><span t-field="o.amount_total"/></strong>
+                                        <t t-set="subtotal" t-value="o.amount_untaxed"/>
+                                        <t t-set="ppn_amount" t-value="sum(abs(l.balance) for l in o.line_ids.filtered(lambda x: x.tax_line_id and '11' in x.tax_line_id.name))"/>
+                                        <t t-set="pph_amount" t-value="sum(abs(l.balance) for l in o.line_ids.filtered(lambda x: x.tax_line_id and ('PPH' in x.tax_line_id.name.upper() or 'pph' in x.tax_line_id.name.lower())))"/>
+                                        <strong>
+                                            <span t-esc="subtotal + ppn_amount - pph_amount" 
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </strong>
                                     </td>
                                 </tr>
                             </table>
