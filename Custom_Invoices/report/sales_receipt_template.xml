@@ -128,11 +128,12 @@
                                     </tr>
                                 </t>
 
-                                <!-- PPH Tax -->
+                                <!-- PPH Tax (dengan tanda minus) -->
                                 <t t-foreach="o.line_ids.filtered(lambda l: l.tax_line_id and ('PPH' in l.tax_line_id.name.upper() or 'pph' in l.tax_line_id.name.lower()))" t-as="tax_line">
                                     <tr>
                                         <td><span t-field="tax_line.tax_line_id.name"/></td>
                                         <td class="text-right">
+                                            <span>-</span>
                                             <span t-esc="abs(tax_line.balance)" 
                                                   t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
