@@ -17,7 +17,7 @@ def json_to_xlsx(json_file_path, xlsx_file_path):
         else:
             raise ValueError("Format JSON tidak sesuai dengan yang diharapkan")
         
-        # Menyimpan DataFrame ke file Excel
+        # Menyimpan DataFrame ke file ExcelSplitter-2.0
         df.to_excel(xlsx_file_path, index=False)
         return True, f"File berhasil dikonversi dan disimpan ke: {xlsx_file_path}"
         
@@ -32,61 +32,129 @@ class JsonToXlsxApp:
     def __init__(self, root):
         self.root = root
         self.root.title("JSON ke XLSX Converter")
-        self.root.geometry("600x400")  # Diperbesar untuk area log
-        self.root.resizable(False, False)
+        self.root.geometry("650x450")  # Ukuran lebih besar untuk tampilan lebih baik
+        self.root.resizable(True, True)  # Biarkan resizable untuk tampilan yang lebih fleksibel
         
         # Variabel untuk menyimpan path file
         self.json_file_path = tk.StringVar()
         self.xlsx_file_path = tk.StringVar()
         
-        # Membuat frame utama
+        # Konfigurasi tema dan style
+        self.setup_styles()
+        
+        # Membuat frame utama dengan padding yang lebih besar
         main_frame = ttk.Frame(root, padding="20")
         main_frame.pack(fill="both", expand=True)
         
-        # Judul aplikasi
-        ttk.Label(main_frame, text="Konversi File JSON ke XLSX by Mahendra", font=("Arial", 16, "bold")).pack(pady=10)
+        # Judul aplikasi dengan garis bawah visual
+        header_frame = ttk.Frame(main_frame)
+        header_frame.pack(fill="x", pady=(0, 15))
         
-        # Frame untuk input file JSON
-        json_frame = ttk.Frame(main_frame)
-        json_frame.pack(fill="x", pady=5)
-        ttk.Label(json_frame, text="File JSON/TXT:").pack(side="left", padx=5)
-        ttk.Entry(json_frame, textvariable=self.json_file_path, width=50).pack(side="left", padx=5)
-        ttk.Button(json_frame, text="Pilih File", command=self.browse_json_file).pack(side="left")
+        ttk.Label(header_frame, text="Konversi File JSON ke XLSX", 
+                 font=("Arial", 18, "bold"), style="Header.TLabel").pack(pady=(0, 5))
+        ttk.Label(header_frame, text="by Mahendra", 
+                 font=("Arial", 10), style="Subheader.TLabel").pack()
         
-        # Frame untuk output file XLSX
-        xlsx_frame = ttk.Frame(main_frame)
-        xlsx_frame.pack(fill="x", pady=5)
-        ttk.Label(xlsx_frame, text="File XLSX:").pack(side="left", padx=5)
-        ttk.Entry(xlsx_frame, textvariable=self.xlsx_file_path, width=50).pack(side="left", padx=5)
-        ttk.Button(xlsx_frame, text="Pilih File", command=self.browse_xlsx_file).pack(side="left")
+        # Garis pembatas
+        separator = ttk.Separator(header_frame, orient="horizontal")
+        separator.pack(fill="x", pady=(5, 0))
         
-        # Tombol konversi
-        ttk.Button(main_frame, text="Konversi", command=self.convert_file, style="Accent.TButton").pack(pady=10)
+        # Frame untuk input dan output dalam satu container
+        io_frame = ttk.LabelFrame(main_frame, text="File Input/Output", padding=(15, 10))
+        io_frame.pack(fill="x", pady=10)
         
-        # Area log
-        log_frame = ttk.LabelFrame(main_frame, text="Log")
+        # Input file JSON
+        json_frame = ttk.Frame(io_frame)
+        json_frame.pack(fill="x", pady=(5, 10))
+        ttk.Label(json_frame, text="File JSON/TXT:", width=12).pack(side="left", padx=5)
+        ttk.Entry(json_frame, textvariable=self.json_file_path, width=50).pack(side="left", padx=5, fill="x", expand=True)
+        ttk.Button(json_frame, text="Pilih File", command=self.browse_json_file, style="Action.TButton").pack(side="left", padx=(5, 0))
+        
+        # Output file XLSX
+        xlsx_frame = ttk.Frame(io_frame)
+        xlsx_frame.pack(fill="x", pady=(0, 5))
+        ttk.Label(xlsx_frame, text="File XLSX:", width=12).pack(side="left", padx=5)
+        ttk.Entry(xlsx_frame, textvariable=self.xlsx_file_path, width=50).pack(side="left", padx=5, fill="x", expand=True)
+        ttk.Button(xlsx_frame, text="Pilih File", command=self.browse_xlsx_file, style="Action.TButton").pack(side="left", padx=(5, 0))
+        
+        # Tombol konversi dengan frame tersendiri
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(fill="x", pady=10)
+        convert_button = ttk.Button(button_frame, text="Konversi", command=self.convert_file, style="Accent.TButton")
+        convert_button.pack(pady=5, padx=100)
+        
+        # Area log dengan tampilan yang ditingkatkan
+        log_frame = ttk.LabelFrame(main_frame, text="Log Aktivitas", padding=(10, 5))
         log_frame.pack(fill="both", expand=True, pady=10)
         
-        self.log_text = tk.Text(log_frame, height=8, width=70, wrap="word")
-        self.log_text.pack(fill="both", expand=True, padx=5, pady=5)
+        # Frame untuk text log dan scrollbar
+        log_container = ttk.Frame(log_frame)
+        log_container.pack(fill="both", expand=True)
         
         # Scrollbar untuk area log
-        scrollbar = ttk.Scrollbar(self.log_text, command=self.log_text.yview)
+        scrollbar = ttk.Scrollbar(log_container)
         scrollbar.pack(side="right", fill="y")
-        self.log_text.config(yscrollcommand=scrollbar.set)
         
-        # Status bar
+        # Text widget dengan warna latar dan font yang lebih baik
+        self.log_text = tk.Text(log_container, height=8, wrap="word", 
+                              font=("Consolas", 9), bg="#f9f9f9", fg="#333333")
+        self.log_text.pack(side="left", fill="both", expand=True)
+        
+        # Konfigurasi scrollbar
+        self.log_text.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.log_text.yview)
+        
+        # Status bar yang lebih jelas
         self.status_var = tk.StringVar()
         self.status_var.set("Siap untuk konversi")
-        status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief="sunken", anchor="w")
-        status_bar.pack(fill="x", side="bottom", pady=5)
-        
-        # Styling
-        style = ttk.Style()
-        style.configure("Accent.TButton", font=("Arial", 11), background="#007bff")
+        status_bar = ttk.Label(root, textvariable=self.status_var, relief="sunken", 
+                              anchor="w", padding=(10, 2), style="Status.TLabel")
+        status_bar.pack(fill="x", side="bottom")
         
         # Inisialisasi log
-        self.log("Aplikasi siap digunakan")
+        self.log("Aplikasi siap digunakan. Silakan pilih file JSON untuk dikonversi.")
+    
+    def setup_styles(self):
+        """Konfigurasi style untuk tampilan yang lebih modern"""
+        style = ttk.Style()
+        
+        # Warna tema
+        primary_color = "#4a86e8"
+        secondary_color = "#63b1f2"
+        bg_color = "#f0f0f0"
+        
+        # Konfigurasi tombol utama
+        style.configure("Accent.TButton", 
+                       font=("Arial", 11, "bold"),
+                       padding=(20, 10),
+                       background=primary_color)
+        
+        # Tombol aksi (pilih file)
+        style.configure("Action.TButton",
+                       padding=(10, 5))
+        
+        # Label header
+        style.configure("Header.TLabel", 
+                       foreground=primary_color)
+        
+        # Label subheader
+        style.configure("Subheader.TLabel", 
+                       foreground="#666666")
+        
+        # Status bar
+        style.configure("Status.TLabel", 
+                       background="#f0f0f0", 
+                       font=("Arial", 9))
+                       
+        # Konfigurasi frame
+        style.configure("TLabelframe", 
+                       borderwidth=1, 
+                       relief="solid")
+        
+        # Label frame header
+        style.configure("TLabelframe.Label", 
+                       font=("Arial", 10, "bold"),
+                       foreground=primary_color)
     
     def log(self, message):
         """Menambahkan pesan ke area log"""
