@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TaxInvoiceBulk xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<TIN>0314131319619000</TIN>				
+	<ListOfTaxInvoice>														
+			<TaxInvoice>														
+				<TaxInvoiceDate>2025-01-02</TaxInvoiceDate>	
+				<TaxInvoiceOpt>Normal</TaxInvoiceOpt>		
+				<TrxCode>04</TrxCode>					
+				<AddInfo/>							
+				<CustomDoc/>						
+				<RefDesc>IV/0125/0015</RefDesc>	
+				<FacilityStamp/>	
+				<SellerIDTKU>0314131319619000</SellerIDTKU>	
+				<BuyerTin> </BuyerTin>	
+				<BuyerDocument>National ID</BuyerDocument>	
+				<BuyerCountry>IDN</BuyerCountry>			
+				<BuyerDocumentNumber>3511114108500002</BuyerDocumentNumber>	
+				<BuyerName>CONNY SINTA</BuyerName>	
+				<BuyerAdress>BONDOWOSO</BuyerAdress>	
+				<BuyerEmail/>						
+				<BuyerIDTKU>000000</BuyerIDTKU>	
+					<ListOfGoodService>										
+						<GoodService>												
+							<Opt>A</Opt>											
+							<Code>000000</Code>								
+							<Name>LASKAR BREADCRUMB MIX 10KG</Name>	
+							<Unit>ZAK</Unit>	
+							<Price>121276</Price>	
+							<Qty>40</Qty>	
+							<TotalDiscount></TotalDiscount>	
+							<TaxBase>4851027</TaxBase>	
+							<OtherTaxBase>4446775</OtherTaxBase>	
+							<VATRate>12</VATRate>	
+							<VAT>533613</VAT>	
+							<STLGRate>00</STLGRate>	
+							<STLG>00</STLG>	
+						</GoodService>													
+																						
+				</ListOfGoodService>												
+			</TaxInvoice>														
+																						
+			<TaxInvoice>														
+				<TaxInvoiceDate>2025-01-02</TaxInvoiceDate>	
+				<TaxInvoiceOpt>Normal</TaxInvoiceOpt>		
+				<TrxCode>04</TrxCode>					
+				<AddInfo/>							
+				<CustomDoc/>						
+				<RefDesc>IV/0125/0016</RefDesc>	
+				<FacilityStamp/>	
+				<SellerIDTKU>0314131319619000</SellerIDTKU>	
+				<BuyerTin> </BuyerTin>	
+				<BuyerDocument>National ID</BuyerDocument>	
+				<BuyerCountry>IDN</BuyerCountry>			
+				<BuyerDocumentNumber>3511114108500002</BuyerDocumentNumber>	
+				<BuyerName>CONNY SINTA</BuyerName>	
+				<BuyerAdress>BONDOWOSO</BuyerAdress>	
+				<BuyerEmail/>						
+				<BuyerIDTKU>000000</BuyerIDTKU>	
+					<ListOfGoodService>										
+						<GoodService>												
+							<Opt>A</Opt>											
+							<Code>000000</Code>								
+							<Name>KACANG HIJAU KUPAS CEMORO SEWU 25KG</Name>															
+							<Unit>ZAK</Unit>															
+							<Price>504505</Price>															
+							<Qty>4</Qty>															
+							<TotalDiscount></TotalDiscount>															
+							<TaxBase>2018018</TaxBase>															
+							<OtherTaxBase>1849850</OtherTaxBase>															
+							<VATRate>12</VATRate>															
+							<VAT>221982</VAT>															
+							<STLGRate>00</STLGRate>															
+							<STLG>00</STLG>															
+						</GoodService>																
+																						
+				</ListOfGoodService>																		
+			</TaxInvoice>																			
+																						
+			<TaxInvoice>																			
+				<TaxInvoiceDate>2025-01-02</TaxInvoiceDate>																		
+				<TaxInvoiceOpt>Normal</TaxInvoiceOpt>																		
+				<TrxCode>04</TrxCode>																		
+				<AddInfo/>																		
+				<CustomDoc/>																		
+				<RefDesc>IV/0125/0017</RefDesc>																		
+				<FacilityStamp/>																		
+				<SellerIDTKU>0314131319619000</SellerIDTKU>																		
+				<BuyerTin> </BuyerTin>																		
+				<BuyerDocument>National ID</BuyerDocument>																		
+				<BuyerCountry>IDN</BuyerCountry>																		
+				<BuyerDocumentNumber>3511114108500002</BuyerDocumentNumber>																		
+				<BuyerName>CONNY SINTA</BuyerName>																		
+				<BuyerAdress>BONDOWOSO</BuyerAdress>																		
+				<BuyerEmail/>																		
+				<BuyerIDTKU>000000</BuyerIDTKU>																		
+					<ListOfGoodService>																	
+						<GoodService>																
+							<Opt>A</Opt>															
+							<Code>000000</Code>															
+							<Name>VAT PRO * (AJ) 25KG</Name>															
+							<Unit>ZAK</Unit>															
+							<Price>569369</Price>															
+							<Qty>4</Qty>															
+							<TotalDiscount></TotalDiscount>															
+							<TaxBase>2277477</TaxBase>															
+							<OtherTaxBase>2087688</OtherTaxBase>															
+							<VATRate>12</VATRate>															
+							<VAT>250523</VAT>															
+							<STLGRate>00</STLGRate>															
+							<STLG>00</STLG>															
+						</GoodService>																
+																						
+				</ListOfGoodService>																		
+			</TaxInvoice>																			
+																						
+			<TaxInvoice>																			
+				<TaxInvoiceDate>2025-01-02</TaxInvoiceDate>																		
+				<TaxInvoiceOpt>Normal</TaxInvoiceOpt>																		
+				<TrxCode>04</TrxCode>																		
+				<AddInfo/>																		
+				<CustomDoc/>																		
+				<RefDesc>IV/0125/0018</RefDesc>																		
+				<FacilityStamp/>																		
+				<SellerIDTKU>0314131319619000</SellerIDTKU>																		
+				<BuyerTin> </BuyerTin>																		
+				<BuyerDocument>National ID</BuyerDocument>																		
+				<BuyerCountry>IDN</BuyerCountry>																		
+				<BuyerDocumentNumber>3511014104590001</BuyerDocumentNumber>																		
+				<BuyerName>EVA INDAHWATI</BuyerName>																		
+				<BuyerAdress>BONDOWOSO</BuyerAdress>																		
+				<BuyerEmail/>																		
+				<BuyerIDTKU>000000</BuyerIDTKU>																		
+					<ListOfGoodService>																	
+						<GoodService>																
+							<Opt>A</Opt>															
+							<Code>000000</Code>															
+							<Name>AK STAR BREADCRUMB MIX 10KG</Name>															
+							<Unit>ZAK</Unit>															
+							<Price>121622</Price>															
+							<Qty>10</Qty>															
+							<TotalDiscount></TotalDiscount>															
+							<TaxBase>1216216</TaxBase>															
+							<OtherTaxBase>1114865</OtherTaxBase>															
+							<VATRate>12</VATRate>															
+							<VAT>133784</VAT>															
+							<STLGRate>00</STLGRate>															
+							<STLG>00</STLG>															
+						</GoodService>																
+																						
+				</ListOfGoodService>																		
+			</TaxInvoice>																			
+																						
+			<TaxInvoice>																			
+				<TaxInvoiceDate>2025-01-02</TaxInvoiceDate>																		
+				<TaxInvoiceOpt>Normal</TaxInvoiceOpt>																		
+				<TrxCode>04</TrxCode>																		
+				<AddInfo/>																		
+				<CustomDoc/>																		
+				<RefDesc>IV/0125/0019</RefDesc>																		
+				<FacilityStamp/>																		
+				<SellerIDTKU>0314131319619000</SellerIDTKU>																		
+				<BuyerTin> </BuyerTin>																		
+				<BuyerDocument>National ID</BuyerDocument>																		
+				<BuyerCountry>IDN</BuyerCountry>																		
+				<BuyerDocumentNumber>3511014104590001</BuyerDocumentNumber>																		
+				<BuyerName>EVA INDAHWATI</BuyerName>																		
+				<BuyerAdress>BONDOWOSO</BuyerAdress>																		
+				<BuyerEmail/>																		
+				<BuyerIDTKU>000000</BuyerIDTKU>																		
+					<ListOfGoodService>																	
+						<GoodService>																
+							<Opt>A</Opt>															
+							<Code>000000</Code>															
+							<Name>TEPUNG MAIZENA MIWON ID 25KG</Name>															
+							<Unit>ZAK</Unit>															
+							<Price>220721</Price>															
+							<Qty>2</Qty>															
+							<TotalDiscount></TotalDiscount>															
+							<TaxBase>441441</TaxBase>															
+							<OtherTaxBase>404655</OtherTaxBase>															
+							<VATRate>12</VATRate>															
+							<VAT>48559</VAT>															
+							<STLGRate>00</STLGRate>															
+							<STLG>00</STLG>															
+						</GoodService>																
+						<GoodService>																
+							<Opt>A</Opt>															
+							<Code>000000</Code>															
+							<Name>AK STAR KACANG CINCANG KASAR 10X1KG</Name>															
+							<Unit>KTN</Unit>															
+							<Price>405405</Price>															
+							<Qty>1</Qty>															
+							<TotalDiscount></TotalDiscount>															
+							<TaxBase>405405</TaxBase>															
+							<OtherTaxBase>371622</OtherTaxBase>															
+							<VATRate>12</VATRate>															
+							<VAT>44595</VAT>															
+							<STLGRate>00</STLGRate>															
+							<STLG>00</STLG>															
+						</GoodService>																
+																						
+				</ListOfGoodService>																		
+			</TaxInvoice>																			
+																						
+	</ListOfTaxInvoice>																					
+</TaxInvoiceBulk>																						

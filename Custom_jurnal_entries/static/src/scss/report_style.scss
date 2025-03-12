@@ -1,0 +1,84 @@
+.custom_receipt {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    padding: 15px;
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        
+        th, td {
+            padding: 5px;
+            border: 1px solid #000;
+        }
+        
+        &.table-borderless {
+            td {
+                border: none;
+            }
+        }
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    strong {
+        font-weight: bold;
+    }
+    
+    .receipt-header {
+        text-align: center;
+        margin-bottom: 20px;
+        
+        .company-logo {
+            max-height: 80px;
+        }
+        
+        .company-info {
+            font-size: 12px;
+        }
+    }
+    
+    .receipt-title {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+    
+    .receipt-details {
+        margin: 15px 0;
+        font-size: 11px;
+        
+        table {
+            width: 100%;
+            
+            th, td {
+                padding: 3px;
+                border: 1px solid #ddd;
+            }
+        }
+    }
+    
+    .receipt-footer {
+        margin-top: 20px;
+        font-size: 11px;
+        
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            
+            .signature-box {
+                text-align: center;
+                width: 150px;
+                
+                .signature-line {
+                    border-top: 1px solid #000;
+                    margin-top: 40px;
+                }
+            }
+        }
+    }
+} 

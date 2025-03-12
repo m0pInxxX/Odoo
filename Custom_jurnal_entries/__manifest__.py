@@ -1,21 +1,20 @@
 {
-    'name': 'Custom Journal Entries',
-    'version': '1.3.1',
+    'name': 'Custom Sales Receipt',
+    'version': '1.2.0',
     'author': 'Mahendra',
     'category': 'Accounting',
-    'summary': 'Custom Sales Receipt and Bukti Kas Kecil for Journal Entries',
-    'description': """
-        This module adds custom report formats for journal entries:
-        - Sales Receipt
-        - Bukti Kas Kecil Keluar
-    """,
-    'depends': ['base', 'account'],
+    'summary': 'Custom Sales Receipt Format for Enterprise',
+    'description': """Custom Sales Receipt with specific format""",
+    'depends': [
+        'account',
+        'account_accountant',
+        'web',
+    ],
     'data': [
-        'data/paper_format_data.xml',
-        'views/account_move_view.xml',
-        'report/custom_sales_receipt.xml',
-        'report/custom_sales_receipt_template.xml',
-        'report/bukti_kas_kecil_template.xml',
+        'data/paper_format.xml',
+        'views/account_move_views.xml',
+        'report/sales_receipt_report.xml',
+        'report/sales_receipt_template.xml',
     ],
     'installable': True,
     'application': False,

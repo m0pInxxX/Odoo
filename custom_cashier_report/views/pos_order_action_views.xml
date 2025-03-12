@@ -1,31 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Server Action for Export Wizard -->
-    <record id="action_pos_order_export" model="ir.actions.server">
-        <field name="name">Export POS Orders</field>
+    <record id="action_pos_order_export_xlsx_server" model="ir.actions.server">
+        <field name="name">Export to Excel</field>
         <field name="model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">
-            action = {
-                'type': 'ir.actions.act_window',
-                'res_model': 'pos.order.export.wizard',
-                'view_mode': 'form',
-                'target': 'new',
-                'context': {'active_ids': env.context.get('active_ids')}
-            }
+if records:
+    action = records.export_to_excel()
         </field>
     </record>
 
-    <!-- Adding Export XLSX button to POS Orders Tree View -->
-    <record id="view_pos_order_action" model="ir.ui.view">
-        <field name="name">pos.order.tree</field>
-        <field name="model">pos.order</field>
-        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
-        <field name="arch" type="xml">
-            <xpath expr="//tree" position="inside">
-                <header>
-                    <button name="%(action_pos_order_export)d" string="Export XLSX" type="action" class="btn-primary"/>
-                </header>
-            </xpath>
+    <record id="action_pos_order_print_pdf_server" model="ir.actions.server">
+        <field name="name">POS Order Listing</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+action = records.env.ref('custom_cashier_report.action_report_pos_order_listing').report_action(records)
         </field>
     </record>
 </odoo>
