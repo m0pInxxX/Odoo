@@ -5,7 +5,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 
 # Baca file Excel dengan dtype=str untuk menghindari konversi otomatis
-file_path = 'D:/File Kerja/Chandra/Output.xlsx'
+file_path = 'D:/outputFeb2025.xlsx'
 df = pd.read_excel(file_path, dtype=str)
 
 # Pilih hanya kolom yang dibutuhkan
