@@ -2,7 +2,7 @@
 {
     'name': 'Custom Invoices DPS',
     'version': '1.0',
-    'author': 'Asalan',
+    'author': 'LD Mahendra',
     'category': 'Accounting',
     'summary': 'Custom invoice templates for DPS',
     'description': """

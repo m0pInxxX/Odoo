@@ -34,37 +34,44 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <t t-set="has_product_lines" t-value="False"/>
                                 <t t-foreach="o.invoice_line_ids" t-as="line">
-                                    <!-- Handle section type -->
-                                    <t t-if="line.display_type == 'line_section'">
-                                        <tr>
-                                            <td colspan="4" class="text-left">
+                                    <t t-if="not line.display_type">
+                                        <t t-set="has_product_lines" t-value="True"/>
+                                    </t>
+                                    <tr t-att-class="'font-italic' if line.display_type == 'line_note' else ''">
+                                        <td>
+                                            <t t-if="line.display_type == 'line_section'">
                                                 <strong><span t-field="line.name"/></strong>
-                                            </td>
-                                        </tr>
-                                    </t>
-                                    <!-- Handle note type -->
-                                    <t t-elif="line.display_type == 'line_note'">
-                                        <tr>
-                                            <td colspan="4" class="text-left font-italic">
+                                            </t>
+                                            <t t-elif="line.display_type == 'line_note'">
                                                 <span t-field="line.name"/>
-                                            </td>
-                                        </tr>
-                                    </t>
-                                    <!-- Handle normal product lines -->
-                                    <t t-else="">
-                                        <tr>
-                                            <td><span t-field="line.name"/></td>
-                                            <td class="text-right">
-                                                <span t-if="not line.display_type" t-field="line.quantity"/>
-                                            </td>
-                                            <td class="text-right">
-                                                <span t-if="not line.display_type" t-field="line.price_unit"/>
-                                            </td>
-                                            <td class="text-right">
-                                                <span t-if="not line.display_type" t-field="line.price_subtotal"/>
-                                            </td>
-                                        </tr>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="line.name"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="not line.display_type" t-field="line.quantity"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="not line.display_type" t-field="line.price_unit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-if="not line.display_type" t-field="line.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <!-- Tampilkan kondisi harga jika ada -->
+                                <t t-if="has_product_lines">
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <t t-if="'Kondisi Harga' in line.name">
+                                            <tr>
+                                                <td colspan="4" class="border-0 pt-3">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                            </tr>
+                                        </t>
                                     </t>
                                 </t>
                             </tbody>
