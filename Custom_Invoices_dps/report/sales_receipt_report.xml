@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Define paper format -->
+    <record id="paperformat_invoice_dps" model="report.paperformat">
+        <field name="name">A4 Invoice DPS</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+    </record>
+
+    <record id="action_report_invoice_dps" model="ir.actions.report">
+        <field name="name">Invoice DPS</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Custom_Invoices_dps.report_invoice_dps</field>
+        <field name="report_file">Custom_Invoices_dps.report_invoice_dps</field>
+        <field name="print_report_name">'Invoice DPS - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_invoice_dps"/>
+    </record>
+</odoo> 

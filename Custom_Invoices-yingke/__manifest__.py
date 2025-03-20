@@ -11,9 +11,9 @@
         'web',
     ],
     'data': [
-        'views/account_move_views.xml',
         'report/sales_receipt_report.xml',
         'report/sales_receipt_template.xml',
+        'data/paper_format.xml',
     ],
     'installable': True,
     'application': False,

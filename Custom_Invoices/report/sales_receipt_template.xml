@@ -14,15 +14,13 @@
                         </div>
                     </div>
 
-                    <!-- Info Section -->
                     <div class="row mt-3">
-                        <!-- Invoice Info - Left Side -->
                         <div class="col-6">
                             <table class="table table-sm table-borderless" style="width: 80%;">
                                 <tr>
                                     <td style="width: 30%;">DATE</td>
                                     <td style="width: 5%;">:</td>
-                                    <td><span t-field="o.invoice_date"/></td>
+                                    <td><span t-field="o.invoice_date" t-options='{"format": "MM/dd/yyyy"}'/></td>
                                 </tr>
                                 <tr>
                                     <td>INVOICE #</td>
@@ -32,11 +30,10 @@
                                 <tr>
                                     <td>DUE DATE</td>
                                     <td>:</td>
-                                    <td><span t-field="o.invoice_date_due"/></td>
+                                    <td><span t-field="o.invoice_date_due" t-options='{"format": "MM/dd/yyyy"}'/></td>
                                 </tr>
                             </table>
                         </div>
-                        <!-- Company Info - Right Side -->
                         <div class="col-6 text-right">
                             <strong><span t-field="o.company_id.name"/></strong><br/>
                             <span t-field="o.company_id.street"/><br/>
@@ -83,9 +80,6 @@
                                             <td><t t-esc="line_number"/></td>
                                             <td>
                                                 <span t-field="line.name"/>
-                                                <t t-if="line.name and '/' not in line.name">
-                                                    /<span t-field="line.name" t-options="{'widget': 'text'}"/>
-                                                </t>
                                             </td>
                                             <td class="text-center">
                                                 <span t-field="line.quantity"/>
@@ -113,7 +107,7 @@
                                 <tr>
                                     <td>Subtotal</td>
                                     <td class="text-right">
-                                        <span t-field="o.amount_untaxed"/>
+                                        <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                     </td>
                                 </tr>
                                 

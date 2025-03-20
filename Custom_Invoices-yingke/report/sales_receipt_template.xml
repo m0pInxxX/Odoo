@@ -45,7 +45,7 @@
                                 </tr>
                                 <tr>
                                     <td>Payment terms:</td>
-                                    <td>Within 7 Days</td>
+                                    <td><span t-field="o.invoice_payment_term_id.name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Consultant:</td>
@@ -156,31 +156,45 @@
                             <table class="table table-sm table-borderless">
                                 <tr>
                                     <td style="width: 20%;">Account Name</td>
-                                    <td>YINGKE MATRIX INDONESIA, PT.</td>
+                                    <td><span t-field="o.partner_bank_id.partner_id.name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Address</td>
-                                    <td>AXA Tower Lantai 37 Suite 3, Jl. Prof. Dr. Satrio Kav.18, Desa/Kelurahan/Karet Kuningan, Kec. Setiabudi, Kota Adm. Jakarta Selatan, Provinsi DKI Jakarta Kode Pos: 12940</td>
+                                    <td>
+                                        <t t-set="address_parts" t-value="[]"/>
+                                        <t t-if="o.partner_bank_id.partner_id.street" t-set="address_parts" t-value="address_parts + [o.partner_bank_id.partner_id.street]"/>
+                                        <t t-if="o.partner_bank_id.partner_id.street2" t-set="address_parts" t-value="address_parts + [o.partner_bank_id.partner_id.street2]"/>
+                                        <span t-esc="', '.join([p for p in address_parts if p])"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Add Account No.</td>
-                                    <td>774-200-384-6 (IDR)</td>
+                                    <td><span t-field="o.partner_bank_id.acc_number"/></td>
                                 </tr>
                                 <tr>
                                     <td>NPWP</td>
-                                    <td>99.093.008.7-031.000</td>
+                                    <td><span t-field="o.partner_bank_id.partner_id.vat"/></td>
                                 </tr>
                                 <tr>
                                     <td>Beneficiary Bank</td>
-                                    <td>BANK UOB INDONESIA /</td>
+                                    <td><span t-field="o.partner_bank_id.bank_id.name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Address</td>
-                                    <td>JL M.H. THAMRIN No. 10, UOB PLAZA Jakarta 10230</td>
+                                    <td>
+                                        <t t-set="bank_address_parts" t-value="[]"/>
+                                        <t t-if="o.partner_bank_id.bank_id.street" t-set="bank_address_parts" t-value="bank_address_parts + [o.partner_bank_id.bank_id.street]"/>
+                                        <t t-if="o.partner_bank_id.bank_id.street2" t-set="bank_address_parts" t-value="bank_address_parts + [o.partner_bank_id.bank_id.street2]"/>
+                                        <t t-if="o.partner_bank_id.bank_id.city" t-set="bank_address_parts" t-value="bank_address_parts + [o.partner_bank_id.bank_id.city]"/>
+                                        <t t-if="o.partner_bank_id.bank_id.state" t-set="bank_address_parts" t-value="bank_address_parts + [o.partner_bank_id.bank_id.state]"/>
+                                        <t t-if="o.partner_bank_id.bank_id.zip" t-set="bank_address_parts" t-value="bank_address_parts + [o.partner_bank_id.bank_id.zip]"/>
+                                        <t t-if="o.partner_bank_id.bank_id.country" t-set="bank_address_parts" t-value="bank_address_parts + [o.partner_bank_id.bank_id.country.name]"/>
+                                        <span t-esc="', '.join([p for p in bank_address_parts if p])"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>SWIFT Code</td>
-                                    <td>BBIJIDJAXX</td>
+                                    <td><span t-field="o.partner_bank_id.bank_id.bic"/></td>
                                 </tr>
                             </table>
                         </div>

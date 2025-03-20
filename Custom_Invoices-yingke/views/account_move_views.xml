@@ -12,6 +12,8 @@
             <xpath expr="//field[@name='ref']" position="after">
                 <field name="invoice_date" 
                        invisible="context.get('journal_type') != 'sale'"/>
+                <field name="bank_account_id" 
+                       attrs="{'invisible': [('move_type', 'not in', ['out_invoice', 'out_refund'])]}"/>
             </xpath>
         </field>
     </record>

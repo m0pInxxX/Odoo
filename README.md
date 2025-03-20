@@ -12,9 +12,10 @@ Odoo Custom Module:
 
 
 Some Tools i make:
-- converter Json to excel xlsx
-- Merger excel xlsx
-- Spliter data to few different file
+- converter Json to excel xlsx {already Exe}
+- Merger excel xlsx {already Exe}
+- Spliter data to few different file {already Exe}
+- Spliter data to few different file (only take refrences and NoFP) {already Exe}
 
 Some AutoCount Code
 

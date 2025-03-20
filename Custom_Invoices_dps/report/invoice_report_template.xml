@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_dps">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-6">
+                                <h2>INVOICE</h2>
+                                <div t-if="o.delivery_date">
+                                    <strong>Delivery Date:</strong> <span t-field="o.delivery_date"/>
+                                </div>
+                            </div>
+                            <div class="col-6 text-right">
+                                <div t-if="o.partner_id">
+                                    <strong>Customer:</strong> <span t-field="o.partner_id"/>
+                                </div>
+                                <div t-if="o.invoice_date">
+                                    <strong>Invoice Date:</strong> <span t-field="o.invoice_date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="article mt32">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Unit Price</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <!-- Handle section type -->
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <tr>
+                                            <td colspan="4" class="text-left">
+                                                <strong><span t-field="line.name"/></strong>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <!-- Handle note type -->
+                                    <t t-elif="line.display_type == 'line_note'">
+                                        <tr>
+                                            <td colspan="4" class="text-left font-italic">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <!-- Handle normal product lines -->
+                                    <t t-else="">
+                                        <tr>
+                                            <td><span t-field="line.name"/></td>
+                                            <td class="text-right">
+                                                <span t-if="not line.display_type" t-field="line.quantity"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-if="not line.display_type" t-field="line.price_unit"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-if="not line.display_type" t-field="line.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Subtotal</strong></td>
+                                    <td class="text-right"><span t-field="o.amount_untaxed"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Tax</strong></td>
+                                    <td class="text-right"><span t-field="o.amount_tax"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Total</strong></td>
+                                    <td class="text-right"><span t-field="o.amount_total"/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="footer mt32">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Thank you for your business!</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo> 
