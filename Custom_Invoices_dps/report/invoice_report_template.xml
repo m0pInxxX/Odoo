@@ -4,99 +4,101 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
-                    <div class="header">
-                        <div class="row">
-                            <div class="col-6">
-                                <h2>INVOICE</h2>
-                                <div t-if="o.delivery_date">
-                                    <strong>Delivery Date:</strong> <span t-field="o.delivery_date"/>
+                    <div class="page">
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h2>INVOICE</h2>
+                                    <div t-if="o.delivery_date">
+                                        <strong>Delivery Date:</strong> <span t-field="o.delivery_date"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-6 text-right">
-                                <div t-if="o.partner_id">
-                                    <strong>Customer:</strong> <span t-field="o.partner_id"/>
-                                </div>
-                                <div t-if="o.invoice_date">
-                                    <strong>Invoice Date:</strong> <span t-field="o.invoice_date"/>
+                                <div class="col-6 text-end">
+                                    <div t-if="o.partner_id">
+                                        <strong>Customer:</strong> <span t-field="o.partner_id"/>
+                                    </div>
+                                    <div t-if="o.invoice_date">
+                                        <strong>Invoice Date:</strong> <span t-field="o.invoice_date"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="article mt32">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th class="text-right">Quantity</th>
-                                    <th class="text-right">Unit Price</th>
-                                    <th class="text-right">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-set="has_product_lines" t-value="False"/>
-                                <t t-foreach="o.invoice_line_ids" t-as="line">
-                                    <t t-if="not line.display_type">
-                                        <t t-set="has_product_lines" t-value="True"/>
-                                    </t>
-                                    <tr t-att-class="'font-italic' if line.display_type == 'line_note' else ''">
-                                        <td>
+                        <div class="article mt-4">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th class="text-end">Quantity</th>
+                                        <th class="text-end">Unit Price</th>
+                                        <th class="text-end">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Tampilkan produk dan section dari invoice -->
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <tr t-att-class="'fw-bold' if line.display_type == 'line_section' else 'fst-italic' if line.display_type == 'line_note' else ''">
                                             <t t-if="line.display_type == 'line_section'">
-                                                <strong><span t-field="line.name"/></strong>
+                                                <td colspan="4" class="text-start">
+                                                    <span t-field="line.name"/>
+                                                </td>
                                             </t>
                                             <t t-elif="line.display_type == 'line_note'">
-                                                <span t-field="line.name"/>
+                                                <td colspan="4" class="text-start">
+                                                    <span t-field="line.name"/>
+                                                </td>
                                             </t>
                                             <t t-else="">
-                                                <span t-field="line.name"/>
-                                            </t>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-if="not line.display_type" t-field="line.quantity"/>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-if="not line.display_type" t-field="line.price_unit"/>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-if="not line.display_type" t-field="line.price_subtotal"/>
-                                        </td>
-                                    </tr>
-                                </t>
-                                <!-- Tampilkan kondisi harga jika ada -->
-                                <t t-if="has_product_lines">
-                                    <t t-foreach="o.invoice_line_ids" t-as="line">
-                                        <t t-if="'Kondisi Harga' in line.name">
-                                            <tr>
-                                                <td colspan="4" class="border-0 pt-3">
+                                                <td class="text-start">
                                                     <span t-field="line.name"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.quantity"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.price_unit"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.price_subtotal"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                    
+                                    <!-- Tampilkan sections dan notes dari Sales Order -->
+                                    <t t-set="existing_contents" t-value="o.invoice_line_ids.mapped('name')"/>
+                                    <t t-set="so_lines" t-value="o.invoice_line_ids.sale_line_ids.order_id.order_line.filtered(lambda l: l.display_type in ['line_section', 'line_note'])"/>
+                                    <t t-foreach="so_lines" t-as="so_line">
+                                        <t t-if="so_line.name not in existing_contents">
+                                            <tr t-att-class="'fw-bold' if so_line.display_type == 'line_section' else 'fst-italic'">
+                                                <td colspan="4" class="text-start">
+                                                    <span t-field="so_line.name"/>
                                                 </td>
                                             </tr>
                                         </t>
                                     </t>
-                                </t>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="3" class="text-right"><strong>Subtotal</strong></td>
-                                    <td class="text-right"><span t-field="o.amount_untaxed"/></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="text-right"><strong>Tax</strong></td>
-                                    <td class="text-right"><span t-field="o.amount_tax"/></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="text-right"><strong>Total</strong></td>
-                                    <td class="text-right"><span t-field="o.amount_total"/></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
-                    <div class="footer mt32">
-                        <div class="row">
-                            <div class="col-12">
-                                <p>Thank you for your business!</p>
-                            </div>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Subtotal</strong></td>
+                                        <td class="text-end">
+                                            <span t-field="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Tax</strong></td>
+                                        <td class="text-end">
+                                            <span t-field="o.amount_tax"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Total</strong></td>
+                                        <td class="text-end">
+                                            <span t-field="o.amount_total"/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </t>
