@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_delivery_slip_dps">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-6">
+                                <h2 style="font-size: 24px;">SURAT JALAN</h2>
+                                <p t-field="o.name"/>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Delivery Address:</strong><br/>
+                                <span t-field="o.partner_id.name"/><br/>
+                                <span t-field="o.partner_id.street"/><br/>
+                                <t t-if="o.partner_id.street2">
+                                    <span t-field="o.partner_id.street2"/><br/>
+                                </t>
+                                <span t-field="o.partner_id.city"/>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Order:</strong><br/>
+                                <span t-field="o.origin"/>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Tanggal Pengiriman:</strong><br/>
+                                <span t-field="o.scheduled_date" t-options='{"format": "dd-MMM-yyyy"}'/>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi Sales Order -->
+                        <div class="row mt-4" style="page-break-inside: avoid;">
+                            <div class="col-12">
+                                <t t-if="o.sale_id">
+                                    <t t-set="all_notes" t-value="o.sale_id.order_line.filtered(lambda l: not l.product_id and l.display_type == 'line_note')"/>
+                                    <t t-set="header_notes" t-value="all_notes.filtered(lambda l: 'Untuk memenuhi permintaan' in l.name)"/>
+                                    <t t-if="header_notes">
+                                        <span t-field="header_notes[0].name"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Tabel Barang -->
+                        <div class="article mt-4" style="page-break-inside: avoid;">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th class="text-end">Ordered</th>
+                                        <th class="text-end">Delivered</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-if="len(o.move_ids) > 0">
+                                        <t t-foreach="o.move_ids.filtered(lambda m: m.product_id)" t-as="line">
+                                            <tr style="page-break-inside: avoid;">
+                                                <td>
+                                                    [<span t-field="line.product_id.default_code"/>] <span t-field="line.product_id.name"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.product_uom_qty"/> <span t-field="line.product_uom.name"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.quantity"/> <span t-field="line.product_uom.name"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if="len(o.move_ids) == 0">
+                                        <tr>
+                                            <td colspan="3" class="text-center">
+                                                <em>Tidak ada barang yang tercatat dalam surat jalan ini.</em>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Kondisi Harga -->
+                        <div class="row mt-4" style="page-break-inside: avoid;">
+                            <div class="col-12">
+                                <t t-if="o.sale_id">
+                                    <t t-set="all_notes" t-value="o.sale_id.order_line.filtered(lambda l: not l.product_id and l.display_type == 'line_note')"/>
+                                    <t t-set="price_notes" t-value="all_notes.filtered(lambda l: 'Kondisi Harga' in l.name or 'Harga sudah termasuk' in l.name or 'Penyerahan' in l.name)"/>
+                                    <t t-foreach="price_notes" t-as="note">
+                                        <t t-if="'Kondisi Harga' in note.name">
+                                            <br/><span t-field="note.name"/>
+                                        </t>
+                                        <t t-else="">
+                                            <br/>- <span t-field="note.name"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Catatan -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div t-if="o.note">
+                                    <strong>Catatan:</strong><br/>
+                                    <span t-field="o.note"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tanda Tangan -->
+                        <div class="row mt-5">
+                            <div class="col-4 text-center">
+                                <p>Dibuat oleh,</p>
+                                <br/><br/><br/><br/>
+                                <p>Warehouse</p>
+                            </div>
+                            <div class="col-4 text-center">
+                                <p>Dikirim oleh,</p>
+                                <br/><br/><br/><br/>
+                                <p>Ekspedisi</p>
+                            </div>
+                            <div class="col-4 text-center">
+                                <p>Diterima oleh,</p>
+                                <br/><br/><br/><br/>
+                                <p>Customer</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Override default delivery slip template -->
+    <template id="stock.report_delivery_document" inherit_id="stock.report_delivery_document" primary="True">
+        <xpath expr="/" position="replace">
+            <t t-call="Delivery_Slip_dps.report_delivery_slip_dps"/>
+        </xpath>
+    </template>
+</odoo> 

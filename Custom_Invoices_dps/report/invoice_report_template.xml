@@ -4,11 +4,15 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
-                    <div class="page">
-                        <h2 class="mt-4">Invoice <span t-field="o.name"/></h2>
-
-                        <div class="row mt-4">
+                    <div class="page mb-4">
+                        <!-- Tambahkan padding top yang sangat besar -->
+                        <div style="padding-top: 120px;"></div>
+                        
+                        <div id="informations" class="row">
                             <div class="col-6">
+                                <h1 style="color: #990000; margin-top: -40px;">
+                                    Invoice <span t-field="o.name"/>
+                                </h1>
                                 <strong>Customer:</strong>
                                 <div t-field="o.partner_id"/>
                                 <div t-field="o.partner_id.street"/>
@@ -16,17 +20,17 @@
                             </div>
                             <div class="col-6">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-6" name="invoice_date">
                                         <strong>Invoice Date:</strong>
                                         <div t-field="o.invoice_date"/>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6" name="due_date">
                                         <strong>Due Date:</strong>
                                         <div t-field="o.invoice_date_due"/>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="col-6">
+                                    <div class="col-6" name="origin">
                                         <strong>Source:</strong>
                                         <div t-field="o.invoice_origin"/>
                                     </div>
@@ -127,23 +131,14 @@
                                 <p>Payment terms: <span t-field="o.invoice_payment_term_id.name"/></p>
                             </div>
                         </div>
-
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <p>Payment Transferred to:</p>
-                                <p>Bank BCA Cab Pakuwon Square<br/>
-                                A/N: PT. Delta Persada Solusi<br/>
-                                A.C: 51.0581.7000 (Rupiah - Full Amount)</p>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-8">
+                        
+                        <div class="row mt-5">
+                            <div class="col-7">
                                 <p t-field="o.company_id.x_studio_text_field_8at_1hris698d"/>
                             </div>
-                            <div class="col-4 text-center">
-                                <p class="mb-0"><strong t-field="o.company_id.name"/></p>
-                                <br/><br/><br/><br/>
+                            <div class="col-5 text-center">
+                                <p class="mb-0"><span style="text-decoration: underline;"><strong t-field="o.company_id.name"/></span></p>
+                                <br/><br/><br/><br/><br/><br/>
                                 <p>Finance</p>
                             </div>
                         </div>

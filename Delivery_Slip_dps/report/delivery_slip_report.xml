@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_delivery_slip_dps" model="ir.actions.report">
+        <field name="name">Delivery Slip DPS</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Delivery_Slip_dps.report_delivery_slip_dps</field>
+        <field name="report_file">Delivery_Slip_dps.report_delivery_slip_dps</field>
+        <field name="print_report_name">'Surat Jalan - %s' % object.name</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+</odoo> 
