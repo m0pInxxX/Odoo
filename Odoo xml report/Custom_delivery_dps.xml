@@ -60,7 +60,7 @@
                                         </t>
                                     </t>
                                     
-                                    <!-- Menampilkan section dan notes dari Sales Order dengan filter Down Payment -->
+                                    <!-- Menampilkan section dan notes dari Sales Order dengan filter Kondisi Harga -->
                                     <t t-if="o.sale_id">
                                         <t t-set="existing_contents" t-value="o.move_ids.mapped('name')"/>
                                         <t t-set="so_lines" t-value="o.sale_id.order_line.filtered(lambda l: l.display_type in ['line_section', 'line_note'])"/>
@@ -73,10 +73,10 @@
                                                                 <t t-set="lines" t-value="so_line.name.split('\n')"/>
                                                                 <t t-set="stop_printing" t-value="False"/>
                                                                 <t t-foreach="lines" t-as="note_line">
-                                                                    <t t-if="'Down Payment' in note_line or 'down payment' in note_line or 'DP' in note_line or 'dp:' in note_line or 'DP:' in note_line">
+                                                                    <t t-if="'Kondisi Harga' in note_line or 'Kondisi Harga:' in note_line">
                                                                         <t t-set="stop_printing" t-value="True"/>
                                                                     </t>
-                                                                    <t t-if="not stop_printing and 'Down Payment' not in note_line and 'down payment' not in note_line and 'DP' not in note_line and 'dp:' not in note_line and 'DP:' not in note_line">
+                                                                    <t t-if="not stop_printing and not 'Kondisi Harga' in note_line and not 'Kondisi Harga:' in note_line">
                                                                         <span t-esc="note_line"/><br/>
                                                                     </t>
                                                                 </t>
@@ -94,7 +94,7 @@
                             </table>
                             
                             <div style="margin-top: 50px;">
-                                <table style="width: 60%; margin-left: auto; border-collapse: collapse;">
+                                <table style="width: 50%; margin-left: auto; border-collapse: collapse;">
                                     <tr style="height: 150px;">
                                         <td style="width: 50%; border: 1px solid black; text-align: center; vertical-align: top; padding-top: 5px;">
                                             <span t-field="o.partner_id.name" style="font-size: 12px; display: block;"/>
@@ -104,9 +104,9 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <div style="text-align: left; margin-top: 5px; margin-left: 40%;">
+                                <div style="text-align: left; margin-top: 5px; margin-left: 50%;">
                                     <span>Nama Terang &amp; stample</span>
-                                    <span style="display: inline-block; border-top: 1px solid black; width: 270px; margin-left: 10px;"> </span>
+                                    <span style="display: inline-block; border-top: 1px solid black; width: 200px; margin-left: 10px;"> </span>
                                 </div>
                             </div>
                         </div>

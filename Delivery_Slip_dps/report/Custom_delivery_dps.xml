@@ -60,7 +60,7 @@
                                         </t>
                                     </t>
                                     
-                                    <!-- Menampilkan section dan notes dari Sales Order dengan filter Down Payment -->
+                                    <!-- Menampilkan section dan notes dari Sales Order dengan filter Kondisi Harga dan Down Payment -->
                                     <t t-if="o.sale_id">
                                         <t t-set="existing_contents" t-value="o.move_ids.mapped('name')"/>
                                         <t t-set="so_lines" t-value="o.sale_id.order_line.filtered(lambda l: l.display_type in ['line_section', 'line_note'])"/>
@@ -73,10 +73,16 @@
                                                                 <t t-set="lines" t-value="so_line.name.split('\n')"/>
                                                                 <t t-set="stop_printing" t-value="False"/>
                                                                 <t t-foreach="lines" t-as="note_line">
+                                                                    <!-- Filter untuk Kondisi Harga -->
+                                                                    <t t-if="'Kondisi Harga' in note_line or 'Kondisi Harga:' in note_line">
+                                                                        <t t-set="stop_printing" t-value="True"/>
+                                                                    </t>
+                                                                    <!-- Filter untuk Down Payment -->
                                                                     <t t-if="'Down Payment' in note_line or 'down payment' in note_line or 'DP' in note_line or 'dp:' in note_line or 'DP:' in note_line">
                                                                         <t t-set="stop_printing" t-value="True"/>
                                                                     </t>
-                                                                    <t t-if="not stop_printing and 'Down Payment' not in note_line and 'down payment' not in note_line and 'DP' not in note_line and 'dp:' not in note_line and 'DP:' not in note_line">
+                                                                    <!-- Tampilkan hanya jika tidak termasuk Kondisi Harga dan Down Payment -->
+                                                                    <t t-if="not stop_printing and 'Kondisi Harga' not in note_line and 'Kondisi Harga:' not in note_line and 'Down Payment' not in note_line and 'down payment' not in note_line and 'DP' not in note_line and 'dp:' not in note_line and 'DP:' not in note_line">
                                                                         <span t-esc="note_line"/><br/>
                                                                     </t>
                                                                 </t>

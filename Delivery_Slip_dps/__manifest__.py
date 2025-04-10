@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Delivery Slip DPS',
+    'name': 'Custom Delivery Slip DPS',
     'version': '1.0',
-    'author': 'LD Arengga',
+    'author': 'LD Arrengga, Mahendra',
     'category': 'Inventory',
     'summary': 'Custom delivery slip templates for DPS',
     'description': """
         Custom delivery slip templates for Delta Persada Solusi
         - Custom delivery slip report from stock picking
         - Custom paper format
-        - Additional fields for delivery slip
+        - Integration with sales module
     """,
     'depends': [
         'base',
         'stock',
         'sale_management',
+        'delivery',
     ],
     'data': [
         'security/ir.model.access.csv',

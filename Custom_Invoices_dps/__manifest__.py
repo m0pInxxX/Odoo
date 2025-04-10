@@ -19,8 +19,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/account_move_views.xml',
-        'report/sales_receipt_report.xml',
-        'report/sales_receipt_template.xml',
+        'report/invoice_report.xml',
         'report/invoice_report_template.xml',
     ],
     'installable': True,

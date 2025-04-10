@@ -1,1 +1,1 @@
-from . import Logika_surat
+from . import model
